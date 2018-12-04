@@ -19,6 +19,10 @@ public class Character : MonoBehaviour {
 
     //private variables
     private Animator anim;
+    private bool up = false;
+    private bool down = false;
+    private bool left = false;
+    private bool right = false;
 
     void Attack () {
 
@@ -32,26 +36,64 @@ public class Character : MonoBehaviour {
 
     }
 
-    public void MoveUp (float value, float deltaTime) {
-        if(value < 0)
+    public void MoveUp (float value) {
+        anim.SetBool("isMoving", true);
+        if (value < 0)
         {
             Debug.Log("MOVE DOWN");
-        }else if(value > 0)
+            if (!down)
+            {
+                anim.SetTrigger("faceDown");
+                down = true;
+            }
+            
+            transform.Translate(Vector3.down * Time.deltaTime);
+        }
+        else if(value > 0)
         {
             Debug.Log("MOVE UP");
+            if (!up)
+            {
+                anim.SetTrigger("faceUp");
+                up = true;
+            }
+            transform.Translate(Vector3.up * Time.deltaTime);
         }
     }
 
-    public void MoveRight (float value, float deltaTime) {
+    public void MoveRight (float value) {
+        anim.SetBool("isMoving", true);
         if (value > 0)
         {
             Debug.Log("MOVE RIGHT");
+            if (!right)
+            {
+                anim.SetTrigger("faceRight");
+                right = true;
+            }
+            transform.Translate(Vector3.right * Time.deltaTime);
         }
         else if (value < 0)
         {
             Debug.Log("MOVE LEFT");
+            if (!left)
+            {
+                anim.SetTrigger("faceLeft");
+                left = true;
+            }
+            transform.Translate(Vector3.left * Time.deltaTime);
         }
 
+    }
+
+    public void StopMove()
+    {
+        Debug.Log("STOP");
+        up = false;
+        down = false;
+        right = false;
+        left = false;
+        anim.SetBool("isMoving", false);
     }
 
 

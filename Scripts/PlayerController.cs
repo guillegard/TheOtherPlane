@@ -14,14 +14,17 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
         if (Input.GetButton("Horizontal"))
         {
-            characterScript.MoveRight(Input.GetAxis("Horizontal"), 1);
+            characterScript.MoveRight(Input.GetAxis("Horizontal"));
         }
 
-        if (Input.GetButton("Vertical"))
+        else if (Input.GetButton("Vertical"))
         {
             //Debug.Log("KEYDOWN");
             //Debug.Log(Input.GetAxis("Vertical"));
-            characterScript.MoveUp(Input.GetAxis("Vertical"), 1);
+            characterScript.MoveUp(Input.GetAxis("Vertical"));
         }
+
+        if (Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical"))
+            characterScript.StopMove();
     }
 }
