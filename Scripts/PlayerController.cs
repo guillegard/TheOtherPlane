@@ -12,9 +12,16 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Horizontal"))
+        if (Input.GetButton("Horizontal"))
         {
             characterScript.MoveRight(Input.GetAxis("Horizontal"), 1);
+        }
+
+        if (Input.GetButton("Vertical"))
+        {
+            //Debug.Log("KEYDOWN");
+            //Debug.Log(Input.GetAxis("Vertical"));
+            characterScript.MoveUp(Input.GetAxis("Vertical"), 1);
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
+    //public variables
     public float moveSpeed;
     public float hp;
     public float spirit;
@@ -15,7 +16,9 @@ public class Character : MonoBehaviour {
     public float specialDamage;
     public Vector2 direction;
     public Vector2 velocity;
-   
+
+    //private variables
+    private Animator anim;
 
     void Attack () {
 
@@ -30,17 +33,31 @@ public class Character : MonoBehaviour {
     }
 
     public void MoveUp (float value, float deltaTime) {
-
+        if(value < 0)
+        {
+            Debug.Log("MOVE DOWN");
+        }else if(value > 0)
+        {
+            Debug.Log("MOVE UP");
+        }
     }
 
     public void MoveRight (float value, float deltaTime) {
+        if (value > 0)
+        {
+            Debug.Log("MOVE RIGHT");
+        }
+        else if (value < 0)
+        {
+            Debug.Log("MOVE LEFT");
+        }
 
     }
 
 
 	// Use this for initialization
 	void Start () {
-		
+        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
