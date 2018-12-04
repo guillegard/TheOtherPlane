@@ -13,6 +13,8 @@ public class Character : MonoBehaviour {
     public float damage;
     public float cooldown;
     public float specialDamage;
+    public Vector2 direction;
+    public Vector2 velocity;
    
 
     void Attack () {
@@ -27,14 +29,13 @@ public class Character : MonoBehaviour {
 
     }
 
-    void MoveUp (float value, float deltaTime) {
+    public void MoveUp (float value, float deltaTime) {
 
     }
 
-    void MoveRight (float value, float deltaTime) {
+    public void MoveRight (float value, float deltaTime) {
 
     }
-
 
 
 	// Use this for initialization
