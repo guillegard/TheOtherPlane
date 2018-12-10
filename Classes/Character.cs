@@ -44,7 +44,6 @@ public class Character : MonoBehaviour {
             if (!down)
             {
                 anim.SetTrigger("faceDown");
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 down = true;
                 up = false;
                 left = false;
@@ -59,7 +58,6 @@ public class Character : MonoBehaviour {
             if (!up)
             {
                 anim.SetTrigger("faceUp");
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 up = true;
                 left = false;
                 down = false;
@@ -77,7 +75,6 @@ public class Character : MonoBehaviour {
             if (!right)
             {
                 anim.SetTrigger("faceRight");
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
                 right = true;
                 up = false;
                 down = false;
@@ -91,13 +88,12 @@ public class Character : MonoBehaviour {
             if (!left)
             {
                 anim.SetTrigger("faceLeft");
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
                 left = true;
                 up = false;
                 down = false;
                 right = false;
             }
-            transform.Translate(Vector3.right * Time.deltaTime);
+            transform.Translate(Vector3.left * Time.deltaTime);
         }
 
     }
