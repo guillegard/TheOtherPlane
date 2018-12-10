@@ -214,13 +214,13 @@ TextureImporter:
     21300418: link_attack_down4
     21300420: link_attack_down5
     21300422: link_attack_down6
-    21300424: link-sprite-sheet_212
-    21300426: link-sprite-sheet_213
-    21300428: link-sprite-sheet_214
+    21300424: link_special_right0
+    21300426: link_special_right1
+    21300428: link_special_right2
     21300430: link-sprite-sheet_215
-    21300432: link-sprite-sheet_216
-    21300434: link-sprite-sheet_217
-    21300436: link-sprite-sheet_218
+    21300432: link_special_up0
+    21300434: link_special_up1
+    21300436: link_special_up2
     21300438: link-sprite-sheet_219
     21300440: link-sprite-sheet_220
     21300442: link-sprite-sheet_221
@@ -231,9 +231,9 @@ TextureImporter:
     21300452: link-sprite-sheet_226
     21300454: link-sprite-sheet_227
     21300456: link-sprite-sheet_228
-    21300458: link-sprite-sheet_229
-    21300460: link-sprite-sheet_230
-    21300462: link-sprite-sheet_231
+    21300458: link_special_down0
+    21300460: link_special_down1
+    21300462: link_special_down2
     21300464: link-sprite-sheet_232
     21300466: link-sprite-sheet_233
     21300468: link-sprite-sheet_234
@@ -4575,7 +4575,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_212
+      name: link_special_right0
       rect:
         serializedVersion: 2
         x: 3
@@ -4595,7 +4595,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_213
+      name: link_special_right1
       rect:
         serializedVersion: 2
         x: 36
@@ -4615,7 +4615,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_214
+      name: link_special_right2
       rect:
         serializedVersion: 2
         x: 62
@@ -4655,7 +4655,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_216
+      name: link_special_up0
       rect:
         serializedVersion: 2
         x: 126
@@ -4675,7 +4675,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_217
+      name: link_special_up1
       rect:
         serializedVersion: 2
         x: 150
@@ -4695,7 +4695,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_218
+      name: link_special_up2
       rect:
         serializedVersion: 2
         x: 173
@@ -4915,7 +4915,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_229
+      name: link_special_down0
       rect:
         serializedVersion: 2
         x: 10
@@ -4935,7 +4935,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_230
+      name: link_special_down1
       rect:
         serializedVersion: 2
         x: 35
@@ -4955,7 +4955,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: link-sprite-sheet_231
+      name: link_special_down2
       rect:
         serializedVersion: 2
         x: 64
