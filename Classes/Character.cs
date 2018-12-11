@@ -23,7 +23,6 @@ public class Character : MonoBehaviour {
     private bool down = false;
     private bool left = false;
     private bool right = false;
-    private bool attack = false;
 
     public void Attack () {
 
