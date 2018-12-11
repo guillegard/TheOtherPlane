@@ -24,6 +24,12 @@ public class PlayerController : MonoBehaviour {
             characterScript.MoveUp(Input.GetAxis("Vertical"));
         }
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("Attack");
+            characterScript.Attack();
+        }
+
         if (Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical"))
             characterScript.StopMove();
     }

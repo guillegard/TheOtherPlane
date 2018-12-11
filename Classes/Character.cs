@@ -23,8 +23,9 @@ public class Character : MonoBehaviour {
     private bool down = false;
     private bool left = false;
     private bool right = false;
+    private bool attack = false;
 
-    void Attack () {
+    public void Attack () {
 
     }
 
@@ -40,7 +41,7 @@ public class Character : MonoBehaviour {
         anim.SetBool("isMoving", true);
         if (value < 0)
         {
-            Debug.Log("MOVE DOWN");
+            //Debug.Log("MOVE DOWN");
             if (!down)
             {
                 anim.SetTrigger("faceDown");
@@ -49,12 +50,12 @@ public class Character : MonoBehaviour {
                 left = false;
                 right = false;
             }
-            
-            transform.Translate(Vector3.down * Time.deltaTime);
+            if(!IsAttacking())
+                transform.Translate(Vector3.down * Time.deltaTime);
         }
         else if(value > 0)
         {
-            Debug.Log("MOVE UP");
+            //Debug.Log("MOVE UP");
             if (!up)
             {
                 anim.SetTrigger("faceUp");
@@ -63,7 +64,8 @@ public class Character : MonoBehaviour {
                 down = false;
                 right = false;
             }
-            transform.Translate(Vector3.up * Time.deltaTime);
+            if(!IsAttacking())
+                transform.Translate(Vector3.up * Time.deltaTime);
         }
     }
 
@@ -71,7 +73,7 @@ public class Character : MonoBehaviour {
         anim.SetBool("isMoving", true);
         if (value > 0)
         {
-            Debug.Log("MOVE RIGHT");
+            //Debug.Log("MOVE RIGHT");
             if (!right)
             {
                 anim.SetTrigger("faceRight");
@@ -80,11 +82,12 @@ public class Character : MonoBehaviour {
                 down = false;
                 left = false;
             }
-            transform.Translate(Vector3.right * Time.deltaTime);
+            if(!IsAttacking())
+                transform.Translate(Vector3.right * Time.deltaTime);
         }
         else if (value < 0)
         {
-            Debug.Log("MOVE LEFT");
+            //Debug.Log("MOVE LEFT");
             if (!left)
             {
                 anim.SetTrigger("faceLeft");
@@ -93,19 +96,37 @@ public class Character : MonoBehaviour {
                 down = false;
                 right = false;
             }
-            transform.Translate(Vector3.left * Time.deltaTime);
+            if(!IsAttacking())
+                transform.Translate(Vector3.left * Time.deltaTime);
         }
 
     }
 
     public void StopMove()
     {
-        Debug.Log("STOP");
+        //Debug.Log("STOP");
         up = false;
         down = false;
         right = false;
         left = false;
         anim.SetBool("isMoving", false);
+    }
+
+    public bool IsAttacking()
+    {
+        if (this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_down") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left"))
+        {
+            return true;
+        }
+
+        if (!(this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_down") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left")))
+        {
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -116,6 +137,6 @@ public class Character : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        
+    }
 }
