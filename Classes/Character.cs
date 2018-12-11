@@ -37,68 +37,71 @@ public class Character : MonoBehaviour {
     }
 
     public void MoveUp (float value) {
-        anim.SetBool("isMoving", true);
-        if (value < 0)
+        if (!IsAttacking())
         {
-            //Debug.Log("MOVE DOWN");
-            if (!down)
+            anim.SetBool("isMoving", true);
+            if (value < 0)
             {
-                anim.SetTrigger("faceDown");
-                down = true;
-                up = false;
-                left = false;
-                right = false;
-            }
-            if(!IsAttacking())
+                //Debug.Log("MOVE DOWN");
+                if (!down)
+                {
+                    anim.SetTrigger("faceDown");
+                    down = true;
+                    up = false;
+                    left = false;
+                    right = false;
+                }
                 transform.Translate(Vector3.down * Time.deltaTime);
-        }
-        else if(value > 0)
-        {
-            //Debug.Log("MOVE UP");
-            if (!up)
-            {
-                anim.SetTrigger("faceUp");
-                up = true;
-                left = false;
-                down = false;
-                right = false;
             }
-            if(!IsAttacking())
+            else if (value > 0)
+            {
+                //Debug.Log("MOVE UP");
+                if (!up)
+                {
+                    anim.SetTrigger("faceUp");
+                    up = true;
+                    left = false;
+                    down = false;
+                    right = false;
+                }
                 transform.Translate(Vector3.up * Time.deltaTime);
+            }
         }
     }
 
     public void MoveRight (float value) {
-        anim.SetBool("isMoving", true);
-        if (value > 0)
+        if (!IsAttacking())
         {
-            //Debug.Log("MOVE RIGHT");
-            if (!right)
+            anim.SetBool("isMoving", true);
+            if (value > 0)
             {
-                anim.SetTrigger("faceRight");
-                right = true;
-                up = false;
-                down = false;
-                left = false;
+                //Debug.Log("MOVE RIGHT");
+                if (!right)
+                {
+                    anim.SetTrigger("faceRight");
+                    right = true;
+                    up = false;
+                    down = false;
+                    left = false;
+                }
+                if (!IsAttacking())
+                    transform.Translate(Vector3.right * Time.deltaTime);
             }
-            if(!IsAttacking())
-                transform.Translate(Vector3.right * Time.deltaTime);
-        }
-        else if (value < 0)
-        {
-            //Debug.Log("MOVE LEFT");
-            if (!left)
+            else if (value < 0)
             {
-                anim.SetTrigger("faceLeft");
-                left = true;
-                up = false;
-                down = false;
-                right = false;
+                //Debug.Log("MOVE LEFT");
+                if (!left)
+                {
+                    anim.SetTrigger("faceLeft");
+                    left = true;
+                    up = false;
+                    down = false;
+                    right = false;
+                }
+                if (!IsAttacking())
+                    transform.Translate(Vector3.left * Time.deltaTime);
             }
-            if(!IsAttacking())
-                transform.Translate(Vector3.left * Time.deltaTime);
         }
-
     }
 
     public void StopMove()
@@ -114,13 +117,17 @@ public class Character : MonoBehaviour {
     public bool IsAttacking()
     {
         if (this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_down") ||
-            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left"))
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_left") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_down"))
         {
             return true;
         }
 
         if (!(this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_down") ||
-            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left")))
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("attack_left") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_right") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_left") ||
+            this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_up") || this.anim.GetCurrentAnimatorStateInfo(0).IsName("special_down")))
         {
             return false;
         }
