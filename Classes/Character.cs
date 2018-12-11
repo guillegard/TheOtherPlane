@@ -17,12 +17,18 @@ public class Character : MonoBehaviour {
     public Vector2 direction;
     public Vector2 velocity;
 
+    public GameObject grabberU;
+    public GameObject grabberD;
+    public GameObject grabberR;
+    public GameObject grabberL;
+
     //private variables
     private Animator anim;
     private bool up = false;
     private bool down = false;
     private bool left = false;
     private bool right = false;
+    private bool hasKey = false;
 
     public void Attack () {
         anim.SetTrigger("attack");
@@ -51,7 +57,7 @@ public class Character : MonoBehaviour {
                     left = false;
                     right = false;
                 }
-                transform.Translate(Vector3.down * Time.deltaTime);
+                transform.Translate(Vector3.down * Time.deltaTime * 3);
             }
             else if (value > 0)
             {
@@ -64,7 +70,7 @@ public class Character : MonoBehaviour {
                     down = false;
                     right = false;
                 }
-                transform.Translate(Vector3.up * Time.deltaTime);
+                transform.Translate(Vector3.up * Time.deltaTime * 3);
             }
         }
     }
@@ -72,12 +78,14 @@ public class Character : MonoBehaviour {
     public void MoveRight (float value) {
         if (!IsAttacking())
         {
+
             anim.SetBool("isMoving", true);
             if (value > 0)
             {
                 //Debug.Log("MOVE RIGHT");
                 if (!right)
                 {
+                    
                     anim.SetTrigger("faceRight");
                     right = true;
                     up = false;
@@ -85,13 +93,18 @@ public class Character : MonoBehaviour {
                     left = false;
                 }
                 if (!IsAttacking())
-                    transform.Translate(Vector3.right * Time.deltaTime);
+                {
+                    transform.Translate(Vector3.right * Time.deltaTime * 3);
+                    //grabber.transform.Translate(new Vector3(transform.position.x + 0.18f, transform.position.y, 0f));
+                }
+                    
             }
             else if (value < 0)
             {
                 //Debug.Log("MOVE LEFT");
                 if (!left)
                 {
+                    
                     anim.SetTrigger("faceLeft");
                     left = true;
                     up = false;
@@ -99,7 +112,10 @@ public class Character : MonoBehaviour {
                     right = false;
                 }
                 if (!IsAttacking())
-                    transform.Translate(Vector3.left * Time.deltaTime);
+                {
+                    transform.Translate(Vector3.left * Time.deltaTime * 3);
+                }
+                    
             }
         }
     }
@@ -107,10 +123,7 @@ public class Character : MonoBehaviour {
     public void StopMove()
     {
         //Debug.Log("STOP");
-        up = false;
-        down = false;
-        right = false;
-        left = false;
+
         anim.SetBool("isMoving", false);
     }
 
@@ -135,10 +148,83 @@ public class Character : MonoBehaviour {
         return true;
     }
 
+    public void Interact()
+    {
+        //Debug.Log(up + " " + down + " " + right + " " + left);
+
+        RaycastHit2D[] bodies;
+        if (up)
+        {
+            bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if(bodies.Length > 1)
+            {
+                Debug.Log(bodies[1].collider.name);
+                if(bodies[1].collider.name == "key")
+                {
+                    Destroy(bodies[1].collider.gameObject);
+                    hasKey = true;
+                }
+            }
+            
+        }
+
+        if (down)
+        {
+            bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                Debug.Log(bodies[1].collider.name);
+                if (bodies[1].collider.name == "key")
+                {
+                    Destroy(bodies[1].collider.gameObject);
+                    hasKey = true;
+                }
+            }
+
+        }
+
+        if (right)
+        {
+            bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                Debug.Log(bodies[1].collider.name);
+                if (bodies[1].collider.name == "key")
+                {
+                    Destroy(bodies[1].collider.gameObject);
+                    hasKey = true;
+                }
+
+                if (bodies[1].collider.name == "door" && hasKey)
+                {
+                    Destroy(bodies[1].collider.gameObject);
+                    hasKey = false;
+                }
+            }
+
+        }
+
+        if (left)
+        {
+            bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                Debug.Log(bodies[1].collider.name);
+                if (bodies[1].collider.name == "key")
+                {
+                    Destroy(bodies[1].collider.gameObject);
+                    hasKey = true;
+                }
+            }
+
+        }
+    }
+
 
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();
+        right = true;
 	}
 	
 	// Update is called once per frame

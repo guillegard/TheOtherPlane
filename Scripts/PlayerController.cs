@@ -36,5 +36,10 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical"))
             characterScript.StopMove();
+
+        if (Input.GetButtonDown("Submit"))
+        {
+            characterScript.Interact();
+        }
     }
 }
