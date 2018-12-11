@@ -25,15 +25,15 @@ public class Character : MonoBehaviour {
     private bool right = false;
 
     public void Attack () {
-
+        anim.SetTrigger("attack");
     }
 
     void HeavyAttack () {
 
     }
 
-    void SpecialAttack () {
-
+    public void SpecialAttack () {
+        anim.SetTrigger("special");
     }
 
     public void MoveUp (float value) {
