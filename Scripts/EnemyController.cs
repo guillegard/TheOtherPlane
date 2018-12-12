@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
-	public float detectionRadius = 5f;
-
 	[HideInInspector]
 	public Enemy pawn;
 

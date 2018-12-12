@@ -15,8 +15,11 @@ public class Character : MonoBehaviour {
     public float cooldown;
 	public float heavyCooldown;
     public float specialDamage;
+
+	[HideInInspector]
     public Vector2 direction;
-    public Vector2 velocity;
+	[HideInInspector]
+	public Vector2 velocity;
 
     public GameObject grabberU;
     public GameObject grabberD;
