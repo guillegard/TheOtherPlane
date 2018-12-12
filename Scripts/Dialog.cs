@@ -17,10 +17,14 @@ public class Dialog : MonoBehaviour {
     public GameObject a1;
     public GameObject a2;
 
-    public GameObject player;
+    public GameObject playerController;
+    public GameObject character;
     public GameObject iBG;
     public GameObject textBG;
     public GameObject aBG;
+
+    public GameObject[] triggers;
+    int triggerIndex = 0;
 
     IEnumerator Type()
     {
@@ -33,7 +37,11 @@ public class Dialog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartDialog(index, finIndex);
+        foreach(GameObject trigger in triggers)
+        {
+            trigger.SetActive(false);
+        }
+        StartDialog(index, finIndex,true);
 	}
 
     public void Next()
@@ -50,18 +58,26 @@ public class Dialog : MonoBehaviour {
         else
         {
             text.text = "";
-            player.GetComponent<PlayerController>().enabled = true;
+            playerController.GetComponent<PlayerController>().enabled = true;
             iBG.SetActive(false);
             textBG.SetActive(false);
             aBG.SetActive(false);
         }
     }
 
-    public void StartDialog(int ini, int fin)
+    public void StartDialog(int ini, int fin, bool isTrigger)
     {
+        if (triggerIndex < triggers.Length) 
+            triggers[triggerIndex].SetActive(true);
+        if(isTrigger)
+            triggerIndex++;
+        iBG.SetActive(true);
+        textBG.SetActive(true);
+        aBG.SetActive(true);
+        character.GetComponent<Animator>().SetBool("isMoving", false);
         index = ini;
         finIndex = fin;
-        player.GetComponent<PlayerController>().enabled = false;
+        playerController.GetComponent<PlayerController>().enabled = false;
         StartCoroutine(Type());
     }
 	

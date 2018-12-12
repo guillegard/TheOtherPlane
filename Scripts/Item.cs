@@ -6,10 +6,16 @@ public class Item : MonoBehaviour {
 
     public enum Type
     {
-        Key, Door, ThirdOption
+        Key, Door, Chest, Special
     }
 
     public Type type;
+    public GameObject contains;
+    public bool hasDialog;
+    public int ini;
+    public int fin;
+    public GameObject dialogManager;
+
 
     // Use this for initialization
     void Start () {
@@ -20,5 +26,15 @@ public class Item : MonoBehaviour {
 	void Update () {
 
 	}
+
+    public GameObject OpenChest()
+    {
+        if (hasDialog)
+        {
+            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
+
+        }
+        return contains;
+    }
 
 }
