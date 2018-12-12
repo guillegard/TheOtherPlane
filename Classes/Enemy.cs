@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : Character {
 
     public string nameE;
     public float spiritReward;
@@ -12,16 +12,16 @@ public class Enemy : MonoBehaviour {
     public float heavyDamageMultiplier;
     public float coolDownMultiplier;
     public float heavyCooldownMultiplier;
-    public bool isBoos;
+    public bool isBoss;
     public float specialMultiplier;
 
 	// Use this for initialization
-	void Start () {
-		
+	public override void Start () {
+		base.Start();
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		
+	public override void Update () {
+		base.Update();
 	}
 }

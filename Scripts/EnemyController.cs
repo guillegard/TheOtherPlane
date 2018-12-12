@@ -8,25 +8,25 @@ public class EnemyController : MonoBehaviour {
 
 	public float detectionRadius = 5f;
 
-	Transform target;
-	Enemy pawn;
+	[HideInInspector]
+	public Enemy pawn;
+
 	NavMeshAgent agent;
+	public EnemyBehaviour enemyBehaviour;
 
 	// Use this for initialization
 	void Start () {
-		target = PlayerManager.instance.player.transform;
 		pawn = GetComponent<Enemy>();
 		agent = GetComponent<NavMeshAgent>();
+
+		if (enemyBehaviour != null) {
+			enemyBehaviour.controller = this;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
-
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, detectionRadius);
+		if (enemyBehaviour != null)
+			enemyBehaviour.Tick();
 	}
 }

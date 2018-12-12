@@ -13,6 +13,7 @@ public class Character : MonoBehaviour {
     public Status status;
     public float damage;
     public float cooldown;
+	public float heavyCooldown;
     public float specialDamage;
     public Vector2 direction;
     public Vector2 velocity;
@@ -34,7 +35,7 @@ public class Character : MonoBehaviour {
         anim.SetTrigger("attack");
     }
 
-    void HeavyAttack () {
+    public void HeavyAttack () {
 
     }
 
@@ -222,13 +223,18 @@ public class Character : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
         anim = GetComponent<Animator>();
         right = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update () {
         
     }
+
+	public Transform[] GetAdyacentTransforms()
+	{
+		return new Transform[] { grabberD.transform, grabberL.transform, grabberR.transform, grabberU.transform};
+	}
 }
