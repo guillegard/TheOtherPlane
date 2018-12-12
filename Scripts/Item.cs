@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Item : MonoBehaviour {
 
-    public GameObject player;
-
     public enum Type
     {
-        Key, SecondOption, ThirdOption
+        Key, Door, ThirdOption
     }
 
     public Type type;
 
     // Use this for initialization
     void Start () {
-		
+        
 	}
 	
 	// Update is called once per frame

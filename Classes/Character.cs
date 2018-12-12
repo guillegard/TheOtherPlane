@@ -159,12 +159,8 @@ public class Character : MonoBehaviour {
             bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
             if(bodies.Length > 1)
             {
-                Debug.Log(bodies[1].collider.name);
-                if(bodies[1].collider.name == "key")
-                {
-                    Destroy(bodies[1].collider.gameObject);
-                    hasKey = true;
-                }
+                //Debug.Log(bodies[1].collider.name);
+                ItemInteract(bodies[1].collider);
             }
             
         }
@@ -174,12 +170,8 @@ public class Character : MonoBehaviour {
             bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
             if (bodies.Length > 1)
             {
-                Debug.Log(bodies[1].collider.name);
-                if (bodies[1].collider.name == "key")
-                {
-                    Destroy(bodies[1].collider.gameObject);
-                    hasKey = true;
-                }
+                //Debug.Log(bodies[1].collider.name);
+                ItemInteract(bodies[1].collider);
             }
 
         }
@@ -189,18 +181,8 @@ public class Character : MonoBehaviour {
             bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
             if (bodies.Length > 1)
             {
-                Debug.Log(bodies[1].collider.name);
-                if (bodies[1].collider.name == "key")
-                {
-                    Destroy(bodies[1].collider.gameObject);
-                    hasKey = true;
-                }
-
-                if (bodies[1].collider.name == "door" && hasKey)
-                {
-                    Destroy(bodies[1].collider.gameObject);
-                    hasKey = false;
-                }
+                //Debug.Log(bodies[1].collider.name);
+                ItemInteract(bodies[1].collider);
             }
 
         }
@@ -210,17 +192,27 @@ public class Character : MonoBehaviour {
             bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
             if (bodies.Length > 1)
             {
-                Debug.Log(bodies[1].collider.name);
-                if (bodies[1].collider.name == "key")
-                {
-                    Destroy(bodies[1].collider.gameObject);
-                    hasKey = true;
-                }
+                //Debug.Log(bodies[1].collider.name);
+                ItemInteract(bodies[1].collider);
             }
-
         }
     }
 
+    void ItemInteract(Collider2D collider)
+    {
+
+        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Key)
+        {
+            Destroy(collider.gameObject);
+            hasKey = true;
+        }
+
+        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Door && hasKey)
+        {
+            Destroy(collider.gameObject);
+            hasKey = false;
+        }
+    }
 
 	// Use this for initialization
 	public virtual void Start () {
