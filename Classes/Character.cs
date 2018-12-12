@@ -8,6 +8,8 @@ public class Character : MonoBehaviour {
     public float moveSpeed;
     public float hp;
     public float spirit;
+    //public ArrayList spirits;
+    public GameObject[] spirits;
     public Weapon equippedWeapon;
     public Special equippedSpecial;
     public Status status;
@@ -215,11 +217,22 @@ public class Character : MonoBehaviour {
             Destroy(collider.gameObject);
             hasKey = false;
         }
+
+        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Chest)
+        {
+            GameObject item = collider.gameObject.GetComponent<Item>().OpenChest();
+            if(item.GetComponent<Special>() != null)
+            {
+                spirits[0] = item;
+            }
+            Destroy(collider.gameObject);
+        }
     }
 
 	// Use this for initialization
 	public virtual void Start () {
         anim = GetComponent<Animator>();
+        spirits = new GameObject[3];
         right = true;
 	}
 	
