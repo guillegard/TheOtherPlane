@@ -44,6 +44,73 @@ public class Character : MonoBehaviour {
 
     public void Attack () {
         anim.SetTrigger("attack");
+        RaycastHit2D[] bodies;
+        if (up)
+        {
+            bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+               for(int i = 1; i < bodies.Length; i++)
+               {
+                    GameObject enemy = bodies[i].collider.gameObject;
+                    if(enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                    }
+               }
+            }
+
+        }
+
+        if (down)
+        {
+            bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                for (int i = 1; i < bodies.Length; i++)
+                {
+                    GameObject enemy = bodies[i].collider.gameObject;
+                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                    }
+                }
+            }
+
+        }
+
+        if (right)
+        {
+            bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                for (int i = 1; i < bodies.Length; i++)
+                {
+                    GameObject enemy = bodies[i].collider.gameObject;
+                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                    }
+                }
+            }
+
+        }
+
+        if (left)
+        {
+            bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+            if (bodies.Length > 1)
+            {
+                for (int i = 1; i < bodies.Length; i++)
+                {
+                    GameObject enemy = bodies[i].collider.gameObject;
+                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                    }
+                }
+            }
+        }
     }
 
     public void HeavyAttack () {
@@ -316,6 +383,39 @@ public class Character : MonoBehaviour {
         {
             equippedSpecial = sp;
             //Debug.Log("Equipped");
+        }
+    }
+
+    public void TakeDamage(float damage, Status s, GameObject didDamage, bool special)
+    {
+        hp -= damage;
+        if(s != null)
+            status = s;
+        if(hp <= 0)
+        {
+            Die(didDamage);
+        }
+    }
+
+    public void Die(GameObject didDamage)
+    {
+        if(GetComponent<Enemy>() == null)
+        {
+
+        }
+        else
+        {
+            didDamage.GetComponent<Character>().GetSpirit(this.gameObject.GetComponent<Enemy>().spiritReward);
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void GetSpirit(float reward)
+    {
+        spirit += reward;
+        if(spirit > maxSpirit)
+        {
+            spirit = maxSpirit;
         }
     }
 	

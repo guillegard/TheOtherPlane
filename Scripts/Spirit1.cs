@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Spirit1 : MonoBehaviour {
 
-    
-
     // Use this for initialization
     void Start () {
 		
@@ -23,6 +21,10 @@ public class Spirit1 : MonoBehaviour {
         if(collision.name.Length >= 7 && collision.name.Substring(0, 7) == "Trigger")
         {
             return;
+        }
+        if(collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            
         }
         Destroy(this.gameObject);
     }
