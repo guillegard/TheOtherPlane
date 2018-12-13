@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-    //public variables
-    public float moveSpeed;
+	[Header("Character Settings")]
+	//public variables
+	public float moveSpeed;
     public float hp;
     public float spirit;
     //public ArrayList spirits;
@@ -36,7 +37,22 @@ public class Character : MonoBehaviour {
     private bool right = false;
     private bool hasKey = false;
 
-    public void Attack () {
+	// Use this for initialization
+	public virtual void Start()
+	{
+		anim = GetComponentInChildren <Animator>();
+		spirits = new GameObject[3];
+		right = true;
+	}
+
+	// Update is called once per frame
+	public virtual void Update()
+	{
+
+	}
+
+	public void Attack () {
+		anim.SetBool("isMoving", false);
         anim.SetTrigger("attack");
     }
 
@@ -227,18 +243,6 @@ public class Character : MonoBehaviour {
             }
             Destroy(collider.gameObject);
         }
-    }
-
-	// Use this for initialization
-	public virtual void Start () {
-        anim = GetComponent<Animator>();
-        spirits = new GameObject[3];
-        right = true;
-	}
-	
-	// Update is called once per frame
-	public virtual void Update () {
-        
     }
 
 	public Transform[] GetAdyacentTransforms()

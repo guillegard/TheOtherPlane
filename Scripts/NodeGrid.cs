@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class NodeGrid : MonoBehaviour {
 
-	
-	public List<Node> path;
-
+	public bool displayGridGizmos = true;
 	public LayerMask unwalkableMask;
 	public Vector2 gridWorldSize;
 	public float nodeRadius = 1;
@@ -16,7 +14,7 @@ public class NodeGrid : MonoBehaviour {
 	int gridNodesY;
 	float nodeDiameter;
 
-	void Start()
+	void Awake()
 	{
 		nodeDiameter = nodeRadius * 2;
 		gridNodesX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
@@ -79,15 +77,6 @@ public class NodeGrid : MonoBehaviour {
 
 	public Node GetNodeFromWorldPoint(Vector3 worldPos)
 	{
-		/**
-		int x = Mathf.RoundToInt((worldPosition.x + gridWorldSize.x / 2 - nodeRadius)/nodeDiameter);
-		int y = Mathf.RoundToInt((worldPosition.y + gridWorldSize.y / 2 - nodeRadius)/nodeDiameter);
-
-		x = Mathf.Clamp(x, 0, gridSizeX - 1);
-		y = Mathf.Clamp(y, 0, gridSizeY - 1);
-
-		return grid[x, y];
-		*/
 		float percentX = Mathf.Clamp01((worldPos.x + gridWorldSize.x / 2) / gridWorldSize.x);
 		float percentY = Mathf.Clamp01((worldPos.y + gridWorldSize.y / 2) / gridWorldSize.y);
 
@@ -99,17 +88,20 @@ public class NodeGrid : MonoBehaviour {
 
 	private void OnDrawGizmos()
 	{
-		if (grid != null)
+		if (grid != null && displayGridGizmos)
 		{
 			foreach (Node n in grid)
 			{
-				if (path != null && path.Contains(n))
-					Gizmos.color = Color.black;
-				else 
-					Gizmos.color = n.walkable ? Color.green : Color.red;
+				Gizmos.color = n.walkable ? Color.green : Color.red;
 				Gizmos.DrawWireCube(n.worldPos, new Vector3(nodeDiameter, nodeDiameter, nodeDiameter));
 			}
 		}
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.white;
+		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
 	}
 
 }

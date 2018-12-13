@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class ProximityAttackBehaviour : EnemyBehaviour
+public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 {
+	[HideInInspector]
+	public Transform target;
+
+	EnemyController controller;
+	Enemy pawn;
 
 	public float detectionRadius = 7;
 	public float attackRadius = 2;
@@ -12,55 +16,62 @@ public class ProximityAttackBehaviour : EnemyBehaviour
 
 	float currentCooldown = 0;
 	bool pursuing = false;      //Whether this enemy is trying to reach the player or not
-	NavMeshAgent pawnAgent;
+	PathfindingAgent pawnAgent;
 
 	void Start()
 	{
 		target = PlayerManager.instance.player.transform;
+		controller = GetComponent<EnemyController>();
+		pawnAgent = GetComponent<PathfindingAgent>();
 
 		if (controller != null)
 		{
 			pawn = controller.pawn;
-			pawnAgent = pawn.gameObject.GetComponent<NavMeshAgent>();
 		}
 	}
 
-	public override void Tick()
+	public void Tick()
 	{
 		if (currentCooldown <= 0)
 		{
+			print("Enemy standing by");
 			float sqrDist = (target.position - pawn.gameObject.transform.position).sqrMagnitude;
 			if (sqrDist <= detectionRadius * detectionRadius)
 			{
+				print("Target detected");
 				if (!pursuing)
 				{
 					pursuing = true;
-
+					
 					Vector3 target = GetNearestAdyacent();
-					pawnAgent.SetDestination(target);
-					pawnAgent.isStopped = false;
+					print("Enemy pursuing: " + target);
+					pawnAgent.MoveTowards(target);
 				}
 				else if (pursuing && sqrDist <= attackRadius * attackRadius)
 				{
+					print("Attacked target");
 					pawn.Attack();
 					pursuing = false;
-					pawnAgent.isStopped = true;
+					pawnAgent.Stop();
 					currentCooldown = cooldownTime;
 				}
+
 			}
-			else
+			else if (pursuing)
 			{
+				print("Target escaped");
 				pursuing = false;
-				pawnAgent.isStopped = true;
+				pawnAgent.Stop();
 			}
 		}
 		else
 		{
+			print("Enemy in cooldown");
 			currentCooldown -= Time.deltaTime;
 		}
 	}
 
-	void OnDrawGizmosSelected()
+	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, detectionRadius);

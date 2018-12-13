@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enemy : Character {
 
-    public string nameE;
+	[Header("Enemy Settings")]
+	public string nameE;
     public float spiritReward;
     public float moveSpeedMultiplier;
     public float hpMultiplier;

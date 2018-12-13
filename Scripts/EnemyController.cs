@@ -1,25 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 
 public class EnemyController : MonoBehaviour {
 
-	[HideInInspector]
 	public Enemy pawn;
 
-	NavMeshAgent agent;
-	public EnemyBehaviour enemyBehaviour;
+	public IEnemyBehaviour enemyBehaviour;
 
 	// Use this for initialization
 	void Start () {
-		pawn = GetComponent<Enemy>();
-		agent = GetComponent<NavMeshAgent>();
+		enemyBehaviour = GetComponent<IEnemyBehaviour>();
 
-		if (enemyBehaviour != null) {
-			enemyBehaviour.controller = this;
+		if (pawn == null)
+		{
+			print("Enemy controller does not have an enemy to control");
 		}
+
+
+		if (enemyBehaviour == null) {
+			print("Enemy controller does not have a behaviour");
+		}
+
 	}
 	
 	// Update is called once per frame
