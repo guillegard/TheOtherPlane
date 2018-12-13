@@ -6,12 +6,12 @@ public class Character : MonoBehaviour {
 
     //public variables
     public float moveSpeed;
+    public float maxHp;
+    public float maxSpirit;
     public float hp;
     public float spirit;
-    //public ArrayList spirits;
-    public GameObject[] spirits;
     public Weapon equippedWeapon;
-    public Special equippedSpecial;
+    int equippedSpecial = -1;
     public Status status;
     public float damage;
     public float cooldown;
@@ -36,6 +36,12 @@ public class Character : MonoBehaviour {
     private bool right = false;
     private bool hasKey = false;
 
+    public Rigidbody2D spirit1Prefab;
+    public Transform barrelUEnd;
+    public Transform barrelDEnd;
+    public Transform barrelREnd;
+    public Transform barrelLEnd;
+
     public void Attack () {
         anim.SetTrigger("attack");
     }
@@ -45,6 +51,44 @@ public class Character : MonoBehaviour {
     }
 
     public void SpecialAttack () {
+        if (equippedSpecial == -1)
+            return;
+    
+        if(equippedSpecial == 1)
+        {
+            GameObject special = GameObject.Find("Spirits/Spirit1");
+            if (special != null)
+            {
+                if (special.GetComponent<Special>().spiritCost > spirit)
+                    return;
+                spirit = spirit - special.GetComponent<Special>().spiritCost;
+            }
+            if (up)
+            {
+                Rigidbody2D rocketInstance;
+                rocketInstance = Instantiate(spirit1Prefab, barrelUEnd.position, barrelUEnd.rotation) as Rigidbody2D;
+                rocketInstance.AddForce(barrelUEnd.up * 500);
+            }
+            if (down)
+            {
+                Rigidbody2D rocketInstance;
+                rocketInstance = Instantiate(spirit1Prefab, barrelDEnd.position, barrelDEnd.rotation) as Rigidbody2D;
+                rocketInstance.AddForce(-barrelDEnd.up * 500);
+            }
+            if (right)
+            {
+                Rigidbody2D rocketInstance;
+                rocketInstance = Instantiate(spirit1Prefab, barrelREnd.position, barrelREnd.rotation) as Rigidbody2D;
+                rocketInstance.AddForce(barrelREnd.right * 500);
+            }
+            if (left)
+            {
+                Rigidbody2D rocketInstance;
+                rocketInstance = Instantiate(spirit1Prefab, barrelLEnd.position, barrelLEnd.rotation) as Rigidbody2D;
+                rocketInstance.AddForce(-barrelLEnd.right * 500);
+            }
+            
+        }
         anim.SetTrigger("special");
     }
 
@@ -220,21 +264,60 @@ public class Character : MonoBehaviour {
 
         if (collider.gameObject.GetComponent<Item>().type == Item.Type.Chest)
         {
-            GameObject item = collider.gameObject.GetComponent<Item>().OpenChest();
-            if(item.GetComponent<Special>() != null)
+            string item = collider.gameObject.GetComponent<Item>().OpenChest();
+            if(item != null)
             {
-                spirits[0] = item;
+                
             }
             Destroy(collider.gameObject);
+        }
+
+        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Special)
+        {
+            Item col = collider.GetComponent<Item>();
+            Debug.Log(col.itemName);
+            GameObject special = GameObject.Find("Spirits/"+col.itemName);
+            if(special != null)
+            {
+                col.spiritDialog();
+                special.GetComponent<Special>().unlocked = true;
+                Destroy(collider.gameObject);
+            }
         }
     }
 
 	// Use this for initialization
 	public virtual void Start () {
         anim = GetComponent<Animator>();
-        spirits = new GameObject[3];
         right = true;
 	}
+
+    public GameObject SpecialIsUnlocked(int sp)
+    {
+        GameObject special = GameObject.Find("Spirits/Spirit" + sp);
+        if(special != null && special.GetComponent<Special>().unlocked)
+        {
+            return special;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void EquipSpirit(int sp)
+    {
+        if(sp == equippedSpecial)
+        {
+            return;
+        }
+        GameObject special = SpecialIsUnlocked(sp);
+        if(special != null)
+        {
+            equippedSpecial = sp;
+            //Debug.Log("Equipped");
+        }
+    }
 	
 	// Update is called once per frame
 	public virtual void Update () {

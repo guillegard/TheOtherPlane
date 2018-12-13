@@ -118,15 +118,15 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1824459771}
     m_Modifications:
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.42
+      value: -12.906668
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.23
+      value: -2.24
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -150,19 +150,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29ae74f4482c2f44ab031d63e30e693e, type: 2}
@@ -594,6 +594,7 @@ MonoBehaviour:
   ini: 0
   fin: 0
   dialogManager: {fileID: 0}
+  itemName: 
 --- !u!1 &241362833 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1445422111791400, guid: 8efed745c698aed4ca8bfaa4caa3d500,
@@ -2170,6 +2171,79 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.62881994, y: 2.0995927}
   m_EdgeRadius: 0
+--- !u!1 &1033964770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1033964771}
+  - component: {fileID: 1033964773}
+  - component: {fileID: 1033964772}
+  m_Layer: 0
+  m_Name: Spirit1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1033964771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1033964770}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1371413480}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1033964772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1033964770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f43a7450acb7a94c81c9628180679bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStatus: 0
+  givenStatus: 5
+  statusName:
+  - Normal
+  - Frozen
+  - Burned
+  - Poisoned
+  - Afraid
+  - Defeated
+  statusMultiplier:
+  - 1
+  - 0.5
+  - 0.5
+  - 0.125
+  - 0
+  - 0
+--- !u!114 &1033964773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1033964770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321bcbc32e60c4d4caaa0c7be0189847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameS: Spirit1
+  damageMultiplier: 2
+  spiritCost: 1
+  statusCondition: {fileID: 1033964772}
+  unlocked: 0
 --- !u!1 &1083808196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,6 +2790,126 @@ Transform:
   m_Father: {fileID: 1141785929}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1331939282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331939286}
+  - component: {fileID: 1331939285}
+  - component: {fileID: 1331939284}
+  - component: {fileID: 1331939283}
+  m_Layer: 0
+  m_Name: fire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1331939283
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331939282}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.011277549, y: 0.019812286}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.19, y: 0.29}
+    newSize: {x: 2.71, y: 2.74}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.20842107, y: 0.32288748}
+  m_EdgeRadius: 0
+--- !u!114 &1331939284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331939282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25125344403476a41b9d0ad24ac7ef28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  contains: {fileID: 0}
+  hasDialog: 1
+  ini: 8
+  fin: 9
+  dialogManager: {fileID: 340087845}
+  itemName: Spirit1
+--- !u!212 &1331939285
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331939282}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300116, guid: 355856df7f9ce814d82f5a5256ed874e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.71, y: 2.74}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1331939286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331939282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.05, y: 9.19, z: 0}
+  m_LocalScale: {x: 4.52221, y: 4.52221, z: 4.52221}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1346717054
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,6 +2984,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1472171273}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1371413479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1371413480}
+  m_Layer: 0
+  m_Name: Spirits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1371413480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1371413479}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0025964975, y: 0.02248764, z: 0.00046160817}
+  m_LocalScale: {x: 0.28646728, y: 0.28646728, z: 0.28646728}
+  m_Children:
+  - {fileID: 1033964771}
+  - {fileID: 1670479379}
+  m_Father: {fileID: 1141785929}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1397737399
 GameObject:
@@ -3132,6 +3356,84 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1759722030669672, guid: 29ae74f4482c2f44ab031d63e30e693e,
     type: 2}
   m_PrefabInternal: {fileID: 52436921}
+--- !u!4 &1575168852 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4136495427837612, guid: 29ae74f4482c2f44ab031d63e30e693e,
+    type: 2}
+  m_PrefabInternal: {fileID: 52436921}
+--- !u!1 &1670479378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1670479379}
+  - component: {fileID: 1670479381}
+  - component: {fileID: 1670479380}
+  m_Layer: 0
+  m_Name: Spirit2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1670479379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1670479378}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0000004161358, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1371413480}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670479380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1670479378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f43a7450acb7a94c81c9628180679bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStatus: 0
+  givenStatus: 5
+  statusName:
+  - Normal
+  - Frozen
+  - Burned
+  - Poisoned
+  - Afraid
+  - Defeated
+  statusMultiplier:
+  - 1
+  - 0.5
+  - 0.5
+  - 0.125
+  - 0
+  - 0
+--- !u!114 &1670479381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1670479378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 321bcbc32e60c4d4caaa0c7be0189847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameS: Spirit2
+  damageMultiplier: 2
+  spiritCost: 1
+  statusCondition: {fileID: 1670479380}
+  unlocked: 0
 --- !u!1 &1728363993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3192,6 +3494,7 @@ MonoBehaviour:
   ini: 0
   fin: 0
   dialogManager: {fileID: 0}
+  itemName: 
 --- !u!212 &1728363996
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3398,10 +3701,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   contains: {fileID: 1575168850}
-  hasDialog: 1
-  ini: 8
-  fin: 9
-  dialogManager: {fileID: 340087845}
+  hasDialog: 0
+  ini: 0
+  fin: 0
+  dialogManager: {fileID: 0}
+  itemName: 
 --- !u!212 &1824459770
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3455,9 +3759,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1824459768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.14, y: 8.95, z: 0}
+  m_LocalPosition: {x: 26.94, y: 11.86, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
-  m_Children: []
+  m_Children:
+  - {fileID: 1575168852}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3981,6 +4286,57 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: hp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: spirit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: spirit1Prefab
+      value: 
+      objectReference: {fileID: 50021309019696608, guid: e30d71c0804f8434385f4d71ccccbb6b,
+        type: 2}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: barrelEnd
+      value: 
+      objectReference: {fileID: 527492580}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: maxHp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: maxSpirit
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: barrelUEnd
+      value: 
+      objectReference: {fileID: 527492580}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: barrelDEnd
+      value: 
+      objectReference: {fileID: 1316797820}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: barrelREnd
+      value: 
+      objectReference: {fileID: 490670928}
+    - target: {fileID: 114579162328714980, guid: 8efed745c698aed4ca8bfaa4caa3d500,
+        type: 2}
+      propertyPath: barrelLEnd
+      value: 
+      objectReference: {fileID: 241362834}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
   m_IsPrefabAsset: 0

@@ -41,5 +41,19 @@ public class PlayerController : MonoBehaviour {
         {
             characterScript.Interact();
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            characterScript.EquipSpirit(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            characterScript.EquipSpirit(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            characterScript.EquipSpirit(3);
+        }
+
     }
 }

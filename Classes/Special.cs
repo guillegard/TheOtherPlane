@@ -8,6 +8,7 @@ public class Special : MonoBehaviour {
     public float damageMultiplier;
     public float spiritCost;
     public Status statusCondition;
+    public bool unlocked;
 
 	// Use this for initialization
 	void Start () {
