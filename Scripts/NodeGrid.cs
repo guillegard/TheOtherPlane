@@ -27,13 +27,13 @@ public class NodeGrid : MonoBehaviour {
 	void CreateGrid()
 	{
 		grid = new Node[gridNodesX, gridNodesY];
-		Vector3 worldTopLeft = transform.position + Vector3.up * gridWorldSize.y / 2 - Vector3.right * gridWorldSize.x / 2;
+		Vector3 worldBotLeft = transform.position - Vector3.up * gridWorldSize.y / 2 - Vector3.right * gridWorldSize.x / 2;
 
 		for (int x = 0; x < gridNodesX; x++)
 		{
 			for (int y = 0; y < gridNodesY; y++)
 			{
-				Vector3 worldPos = worldTopLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.down * (y * nodeDiameter + nodeRadius));
+				Vector3 worldPos = worldBotLeft + (Vector3.right * (x * nodeDiameter + nodeRadius)) + (Vector3.up * (y * nodeDiameter + nodeRadius));
 				bool walkable = Physics2D.BoxCast(worldPos, new Vector2(nodeDiameter, nodeDiameter), 0, Vector2.zero, 0, unwalkableMask.value).collider == null;
 
 				grid[x, y] = new Node(walkable, worldPos, x, y);
@@ -58,7 +58,7 @@ public class NodeGrid : MonoBehaviour {
 			neighbours.Add(grid[node.gridX, node.gridY - 1]);
 
 		//down neighbour
-		if (node.gridX < gridNodesY - 1)
+		if (node.gridY < gridNodesY - 1)
 			neighbours.Add(grid[node.gridX, node.gridY + 1]);
 
 		return neighbours;
@@ -74,6 +74,15 @@ public class NodeGrid : MonoBehaviour {
 
 	public Node GetNodeFromWorldPoint(Vector3 worldPos)
 	{
+		/**
+		int x = Mathf.RoundToInt((worldPosition.x + gridWorldSize.x / 2 - nodeRadius)/nodeDiameter);
+		int y = Mathf.RoundToInt((worldPosition.y + gridWorldSize.y / 2 - nodeRadius)/nodeDiameter);
+
+		x = Mathf.Clamp(x, 0, gridSizeX - 1);
+		y = Mathf.Clamp(y, 0, gridSizeY - 1);
+
+		return grid[x, y];
+		*/
 		float percentX = Mathf.Clamp01((worldPos.x + gridWorldSize.x / 2) / gridWorldSize.x);
 		float percentY = Mathf.Clamp01((worldPos.y + gridWorldSize.y / 2) / gridWorldSize.y);
 

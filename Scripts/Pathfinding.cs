@@ -17,7 +17,6 @@ public class Pathfinding : MonoBehaviour {
 	void Update()
 	{
 		grid.path = FindPath(from.position, to.position);
-		print(grid.path.Count);
 	}
 
 	public List<Node> FindPath(Vector3 beginPos, Vector3 targetPos)
@@ -59,18 +58,15 @@ public class Pathfinding : MonoBehaviour {
 				if (!neighbour.walkable || closedSet.Contains(neighbour))
 					continue;
 
-				if (!openSet.Contains(neighbour))
-				{
-					neighbour.hCost = grid.GetDistanceBetweenNodes(neighbour, end);
-					openSet.Add(neighbour);
-				}
-
 				int costToNeighbour = currentNode.gCost + grid.GetDistanceBetweenNodes(currentNode, neighbour);
 
-				if (costToNeighbour < neighbour.gCost)
+				if (costToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
 				{
 					neighbour.gCost = costToNeighbour;
+					neighbour.hCost = grid.GetDistanceBetweenNodes(neighbour, end);
 					neighbour.parent = currentNode;
+					openSet.Add(neighbour);
+					
 				}
 				
 			}
