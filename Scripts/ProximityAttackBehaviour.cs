@@ -28,6 +28,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 		{
 			pawn = controller.pawn;
 		}
+
 	}
 
 	public void Tick()
@@ -38,13 +39,13 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 			float sqrDist = (target.position - pawn.gameObject.transform.position).sqrMagnitude;
 			if (sqrDist <= detectionRadius * detectionRadius)
 			{
-				print("Target detected");
+				print("Target detected " + target.position);
 				if (!pursuing)
 				{
 					pursuing = true;
 					
 					Vector3 target = GetNearestAdyacent();
-					print("Enemy pursuing: " + target);
+					print("Enemy pursuing to" + target);
 					pawnAgent.MoveTowards(target);
 				}
 				else if (pursuing && sqrDist <= attackRadius * attackRadius)

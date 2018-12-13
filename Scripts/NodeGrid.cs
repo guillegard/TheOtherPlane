@@ -77,6 +77,7 @@ public class NodeGrid : MonoBehaviour {
 
 	public Node GetNodeFromWorldPoint(Vector3 worldPos)
 	{
+
 		float percentX = Mathf.Clamp01((worldPos.x + gridWorldSize.x / 2) / gridWorldSize.x);
 		float percentY = Mathf.Clamp01((worldPos.y + gridWorldSize.y / 2) / gridWorldSize.y);
 
