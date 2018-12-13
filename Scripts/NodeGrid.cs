@@ -41,6 +41,11 @@ public class NodeGrid : MonoBehaviour {
 		}
 	}
 
+	public int NodesInGrid
+	{
+		get { return gridNodesX * gridNodesY; }
+	}
+
 	public List<Node> GetNeighboursOfNode(Node node)
 	{
 		List<Node> neighbours = new List<Node>();
