@@ -860,7 +860,7 @@ Transform:
   m_GameObject: {fileID: 354794972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20.1, y: -2.42, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 1141785929}
   m_Father: {fileID: 0}
@@ -970,7 +970,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   gridWorldSize: {x: 53.01, y: 17.5}
-  nodeRadius: 0.05
+  nodeRadius: 0.3
 --- !u!114 &357177159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,30 +1044,30 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114253403226962466, guid: cfa99917cf5361f4bb45cfff22e50365,
         type: 2}
       propertyPath: detectionRadius
-      value: 1.75
+      value: 2.08
       objectReference: {fileID: 0}
     - target: {fileID: 114253403226962466, guid: cfa99917cf5361f4bb45cfff22e50365,
         type: 2}
       propertyPath: attackRadius
-      value: 0.42
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 114253403226962466, guid: cfa99917cf5361f4bb45cfff22e50365,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 212224699666128322, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 907654445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98b12db4bac86d74a8cb6e4636f62c46, type: 3}
   m_Name: 
