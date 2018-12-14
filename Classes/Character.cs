@@ -53,13 +53,12 @@ public class Character : MonoBehaviour {
                for(int i = 1; i < bodies.Length; i++)
                {
                     GameObject enemy = bodies[i].collider.gameObject;
-                    if(enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    if(enemy.GetComponent<Enemy>() != null)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
                     }
                }
             }
-
         }
 
         if (down)
@@ -70,9 +69,9 @@ public class Character : MonoBehaviour {
                 for (int i = 1; i < bodies.Length; i++)
                 {
                     GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    if (enemy.GetComponent<Enemy>() != null)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
                     }
                 }
             }
@@ -87,9 +86,9 @@ public class Character : MonoBehaviour {
                 for (int i = 1; i < bodies.Length; i++)
                 {
                     GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    if (enemy.GetComponent<Enemy>() != null)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
                     }
                 }
             }
@@ -104,9 +103,9 @@ public class Character : MonoBehaviour {
                 for (int i = 1; i < bodies.Length; i++)
                 {
                     GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null && GetComponent<Enemy>() == null)
+                    if (enemy.GetComponent<Enemy>() != null)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null, this.gameObject);
+                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
                     }
                 }
             }
@@ -124,35 +123,39 @@ public class Character : MonoBehaviour {
         if(equippedSpecial == 1)
         {
             GameObject special = GameObject.Find("Spirits/Spirit1");
+            Special specialScript;
             if (special != null)
             {
-                if (special.GetComponent<Special>().spiritCost > spirit)
+                specialScript = special.GetComponent<Special>();
+                if (specialScript.spiritCost > spirit)
                     return;
-                spirit = spirit - special.GetComponent<Special>().spiritCost;
+                spirit = spirit - specialScript.spiritCost;
             }
+            specialScript = special.GetComponent<Special>();
+            Status specialStatus = special.GetComponent<Status>();
             if (up)
             {
                 Rigidbody2D rocketInstance;
                 rocketInstance = Instantiate(spirit1Prefab, barrelUEnd.position, barrelUEnd.rotation) as Rigidbody2D;
-                rocketInstance.AddForce(barrelUEnd.up * 500);
+                rocketInstance.gameObject.GetComponent<Spirit1>().Move(1, barrelUEnd,specialDamage, specialScript.damageMultiplier,specialStatus); 
             }
             if (down)
             {
                 Rigidbody2D rocketInstance;
                 rocketInstance = Instantiate(spirit1Prefab, barrelDEnd.position, barrelDEnd.rotation) as Rigidbody2D;
-                rocketInstance.AddForce(-barrelDEnd.up * 500);
+                rocketInstance.gameObject.GetComponent<Spirit1>().Move(3, barrelDEnd,specialDamage, specialScript.damageMultiplier, specialStatus);
             }
             if (right)
             {
                 Rigidbody2D rocketInstance;
                 rocketInstance = Instantiate(spirit1Prefab, barrelREnd.position, barrelREnd.rotation) as Rigidbody2D;
-                rocketInstance.AddForce(barrelREnd.right * 500);
+                rocketInstance.gameObject.GetComponent<Spirit1>().Move(2, barrelREnd,specialDamage, specialScript.damageMultiplier, specialStatus);
             }
             if (left)
             {
                 Rigidbody2D rocketInstance;
                 rocketInstance = Instantiate(spirit1Prefab, barrelLEnd.position, barrelLEnd.rotation) as Rigidbody2D;
-                rocketInstance.AddForce(-barrelLEnd.right * 500);
+                rocketInstance.gameObject.GetComponent<Spirit1>().Move(4, barrelLEnd,specialDamage, specialScript.damageMultiplier, specialStatus);
             }
             
         }
@@ -386,28 +389,20 @@ public class Character : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(float damage, Status s, GameObject didDamage, bool special)
+    public void TakeDamage(float damage, Status s)
     {
         hp -= damage;
         if(s != null)
             status = s;
         if(hp <= 0)
         {
-            Die(didDamage);
+            Die();
         }
     }
 
-    public void Die(GameObject didDamage)
+    public void Die()
     {
-        if(GetComponent<Enemy>() == null)
-        {
-
-        }
-        else
-        {
-            didDamage.GetComponent<Character>().GetSpirit(this.gameObject.GetComponent<Enemy>().spiritReward);
-            Destroy(this.gameObject);
-        }
+        Destroy(this.gameObject);
     }
 
     public void GetSpirit(float reward)
