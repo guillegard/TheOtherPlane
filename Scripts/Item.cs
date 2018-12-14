@@ -15,6 +15,7 @@ public class Item : MonoBehaviour {
     public int ini;
     public int fin;
     public GameObject dialogManager;
+    public string itemName;
 
 
     // Use this for initialization
@@ -27,14 +28,20 @@ public class Item : MonoBehaviour {
 
 	}
 
-    public GameObject OpenChest()
+    public string OpenChest()
     {
         if (hasDialog)
         {
             dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
 
         }
-        return contains;
+        return contains.name;
+    }
+
+    public void spiritDialog()
+    {
+        if(hasDialog)
+            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
     }
 
 }

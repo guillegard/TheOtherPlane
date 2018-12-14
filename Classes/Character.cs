@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-	[Header("Character Settings")]
-	//public variables
-	public float moveSpeed;
+    //public variables
+    public float moveSpeed;
+    public float maxHp;
+    public float maxSpirit;
     public float hp;
     public float spirit;
-    //public ArrayList spirits;
-    public GameObject[] spirits;
     public Weapon equippedWeapon;
-    public Special equippedSpecial;
+    int equippedSpecial = -1;
     public Status status;
     public float damage;
     public float cooldown;
@@ -45,23 +44,136 @@ public class Character : MonoBehaviour {
 		right = true;
 	}
 
-	// Update is called once per frame
-	public virtual void Update()
-	{
+    public Rigidbody2D spirit1Prefab;
+    public Transform barrelUEnd;
+    public Transform barrelDEnd;
+    public Transform barrelREnd;
+    public Transform barrelLEnd;
 
-	}
+    public void Attack () {
+        if (!IsAttacking())
+        {
+            anim.SetTrigger("attack");
+            RaycastHit2D[] bodies;
+            if (up)
+            {
+                bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
+                {
+                    for (int i = 1; i < bodies.Length; i++)
+                    {
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
+                    }
+                }
+            }
 
-	public void Attack () {
-		anim.SetBool("isMoving", false);
-        anim.SetTrigger("attack");
+            if (down)
+            {
+                bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
+                {
+                    for (int i = 1; i < bodies.Length; i++)
+                    {
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
+                    }
+                }
+
+            }
+
+            if (right)
+            {
+                bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
+                {
+                    for (int i = 1; i < bodies.Length; i++)
+                    {
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
+                    }
+                }
+
+            }
+
+            if (left)
+            {
+                bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
+                {
+                    for (int i = 1; i < bodies.Length; i++)
+                    {
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void HeavyAttack () {
 
     }
 
-    public void SpecialAttack () {
-        anim.SetTrigger("special");
+    public void SpecialAttack()
+    {
+        if (!IsAttacking()) { 
+            if (equippedSpecial == -1)
+                return;
+
+            if (equippedSpecial == 1)
+            {
+                GameObject special = GameObject.Find("Spirits/Spirit1");
+                Special specialScript;
+                if (special != null)
+                {
+                    specialScript = special.GetComponent<Special>();
+                    if (specialScript.spiritCost > spirit)
+                        return;
+                    spirit = spirit - specialScript.spiritCost;
+                }
+                specialScript = special.GetComponent<Special>();
+                Status specialStatus = special.GetComponent<Status>();
+                if (up)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelUEnd.position, barrelUEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(1, barrelUEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (down)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelDEnd.position, barrelDEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(3, barrelDEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (right)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelREnd.position, barrelREnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(2, barrelREnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (left)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelLEnd.position, barrelLEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(4, barrelLEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+
+            }
+            anim.SetTrigger("special");
+        }
     }
 
     public void MoveUp (float value) {
@@ -236,13 +348,83 @@ public class Character : MonoBehaviour {
 
         if (collider.gameObject.GetComponent<Item>().type == Item.Type.Chest)
         {
-            GameObject item = collider.gameObject.GetComponent<Item>().OpenChest();
-            if(item.GetComponent<Special>() != null)
+            string item = collider.gameObject.GetComponent<Item>().OpenChest();
+            if(item != null)
             {
-                spirits[0] = item;
+                
             }
             Destroy(collider.gameObject);
         }
+
+        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Special)
+        {
+            Item col = collider.GetComponent<Item>();
+            Debug.Log(col.itemName);
+            GameObject special = GameObject.Find("Spirits/"+col.itemName);
+            if(special != null)
+            {
+                col.spiritDialog();
+                special.GetComponent<Special>().unlocked = true;
+                Destroy(collider.gameObject);
+            }
+        }
+    }
+
+    public GameObject SpecialIsUnlocked(int sp)
+    {
+        GameObject special = GameObject.Find("Spirits/Spirit" + sp);
+        if(special != null && special.GetComponent<Special>().unlocked)
+        {
+            return special;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public void EquipSpirit(int sp)
+    {
+        if(sp == equippedSpecial)
+        {
+            return;
+        }
+        GameObject special = SpecialIsUnlocked(sp);
+        if(special != null)
+        {
+            equippedSpecial = sp;
+            //Debug.Log("Equipped");
+        }
+    }
+
+    public void TakeDamage(float damage, Status s)
+    {
+        hp -= damage;
+        if(s != null)
+            status = s;
+        if(hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void GetSpirit(float reward)
+    {
+        spirit += reward;
+        if(spirit > maxSpirit)
+        {
+            spirit = maxSpirit;
+        }
+    }
+	
+	// Update is called once per frame
+	public virtual void Update () {
+        
     }
 
 	public Transform[] GetAdyacentTransforms()
