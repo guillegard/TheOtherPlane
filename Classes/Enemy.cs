@@ -138,6 +138,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        LevelController.KillEnemy();
         GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().GetSpirit(spiritReward);
         Destroy(this.gameObject);   
     }

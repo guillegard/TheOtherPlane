@@ -358,6 +358,7 @@ public class Character : MonoBehaviour {
                 col.spiritDialog();
                 special.GetComponent<Special>().unlocked = true;
                 Destroy(collider.gameObject);
+                LevelController.PickUpSpirit();
             }
         }
     }
