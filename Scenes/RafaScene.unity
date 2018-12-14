@@ -1513,9 +1513,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints:
-  - {x: 5.77, y: 0, z: 0}
+  - {x: 5.77, y: -0.66, z: 0}
   - {x: 2.97, y: -2.25, z: 0}
-  - {x: -0.05, y: -0.01, z: 0}
+  - {x: -0.05, y: 1.27, z: 0}
   shouldLoopAround: 0
   proximityTolerance: 0.005
 --- !u!1 &1017701109
