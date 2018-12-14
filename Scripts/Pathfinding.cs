@@ -24,13 +24,11 @@ public class Pathfinding : MonoBehaviour {
 		Node startNode = grid.GetNodeFromWorldPoint(beginPos);
 		Node endNode = grid.GetNodeFromWorldPoint(targetPos);
 
-		print("Path request " + startNode.worldPos + "->" + endNode.worldPos);
-
 
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 
-		if (startNode.walkable && endNode.walkable)
+		if (startNode.walkable && endNode.walkable && startNode != endNode)
 		{
 
 			Heap<Node> openSet = new Heap<Node>(grid.NodesInGrid);
@@ -77,6 +75,7 @@ public class Pathfinding : MonoBehaviour {
 		{
 			waypoints = RetracePath(startNode, endNode);
 		}
+
 		requestManager.FinishedProcessingPath(waypoints, pathSuccess);
 	}
 
@@ -84,6 +83,7 @@ public class Pathfinding : MonoBehaviour {
 	{
 		List<Node> path = new List<Node>();
 		Node currentNode = endNode;
+
 
 		while (currentNode != startNode)
 		{

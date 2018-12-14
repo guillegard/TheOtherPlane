@@ -89,6 +89,8 @@ public class NodeGrid : MonoBehaviour {
 
 	private void OnDrawGizmos()
 	{
+		Gizmos.color = Color.white;
+		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
 		if (grid != null && displayGridGizmos)
 		{
 			foreach (Node n in grid)
@@ -98,11 +100,4 @@ public class NodeGrid : MonoBehaviour {
 			}
 		}
 	}
-
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.white;
-		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
-	}
-
 }

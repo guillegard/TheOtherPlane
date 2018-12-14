@@ -9,11 +9,24 @@ public class PathfindingAgent : MonoBehaviour {
 	Vector3[] path;
 	int targetIndex;
 
-	void Awake () {
+	void Start () {
 		Character character = GetComponent<Character>();
 		if (character != null)
 		{
 			speed = character.moveSpeed;
+		}
+		else
+		{
+			Enemy enemyPawn = GetComponent<Enemy>();
+
+			if (enemyPawn != null)
+			{
+				speed = enemyPawn.moveSpeed;
+			}
+			else
+			{
+				print("No enemy or character attached to this gameobject. Cannot move it");
+			}
 		}
 	}
 	
