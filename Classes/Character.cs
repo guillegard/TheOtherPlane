@@ -43,69 +43,72 @@ public class Character : MonoBehaviour {
     public Transform barrelLEnd;
 
     public void Attack () {
-        anim.SetTrigger("attack");
-        RaycastHit2D[] bodies;
-        if (up)
+        if (!IsAttacking())
         {
-            bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-            if (bodies.Length > 1)
+            anim.SetTrigger("attack");
+            RaycastHit2D[] bodies;
+            if (up)
             {
-               for(int i = 1; i < bodies.Length; i++)
-               {
-                    GameObject enemy = bodies[i].collider.gameObject;
-                    if(enemy.GetComponent<Enemy>() != null)
-                    {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
-                    }
-               }
-            }
-        }
-
-        if (down)
-        {
-            bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-            if (bodies.Length > 1)
-            {
-                for (int i = 1; i < bodies.Length; i++)
+                bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
                 {
-                    GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null)
+                    for (int i = 1; i < bodies.Length; i++)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
                     }
                 }
             }
 
-        }
-
-        if (right)
-        {
-            bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-            if (bodies.Length > 1)
+            if (down)
             {
-                for (int i = 1; i < bodies.Length; i++)
+                bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
                 {
-                    GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null)
+                    for (int i = 1; i < bodies.Length; i++)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
                     }
                 }
+
             }
 
-        }
-
-        if (left)
-        {
-            bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-            if (bodies.Length > 1)
+            if (right)
             {
-                for (int i = 1; i < bodies.Length; i++)
+                bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
                 {
-                    GameObject enemy = bodies[i].collider.gameObject;
-                    if (enemy.GetComponent<Enemy>() != null)
+                    for (int i = 1; i < bodies.Length; i++)
                     {
-                        enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
+                    }
+                }
+
+            }
+
+            if (left)
+            {
+                bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
+                if (bodies.Length > 1)
+                {
+                    for (int i = 1; i < bodies.Length; i++)
+                    {
+                        GameObject enemy = bodies[i].collider.gameObject;
+                        if (enemy.GetComponent<Enemy>() != null)
+                        {
+                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+                        }
                     }
                 }
             }
@@ -116,50 +119,53 @@ public class Character : MonoBehaviour {
 
     }
 
-    public void SpecialAttack () {
-        if (equippedSpecial == -1)
-            return;
-    
-        if(equippedSpecial == 1)
-        {
-            GameObject special = GameObject.Find("Spirits/Spirit1");
-            Special specialScript;
-            if (special != null)
+    public void SpecialAttack()
+    {
+        if (!IsAttacking()) { 
+            if (equippedSpecial == -1)
+                return;
+
+            if (equippedSpecial == 1)
             {
+                GameObject special = GameObject.Find("Spirits/Spirit1");
+                Special specialScript;
+                if (special != null)
+                {
+                    specialScript = special.GetComponent<Special>();
+                    if (specialScript.spiritCost > spirit)
+                        return;
+                    spirit = spirit - specialScript.spiritCost;
+                }
                 specialScript = special.GetComponent<Special>();
-                if (specialScript.spiritCost > spirit)
-                    return;
-                spirit = spirit - specialScript.spiritCost;
+                Status specialStatus = special.GetComponent<Status>();
+                if (up)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelUEnd.position, barrelUEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(1, barrelUEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (down)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelDEnd.position, barrelDEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(3, barrelDEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (right)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelREnd.position, barrelREnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(2, barrelREnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+                if (left)
+                {
+                    Rigidbody2D rocketInstance;
+                    rocketInstance = Instantiate(spirit1Prefab, barrelLEnd.position, barrelLEnd.rotation) as Rigidbody2D;
+                    rocketInstance.gameObject.GetComponent<Spirit1>().Move(4, barrelLEnd, specialDamage, specialScript.damageMultiplier, specialStatus);
+                }
+
             }
-            specialScript = special.GetComponent<Special>();
-            Status specialStatus = special.GetComponent<Status>();
-            if (up)
-            {
-                Rigidbody2D rocketInstance;
-                rocketInstance = Instantiate(spirit1Prefab, barrelUEnd.position, barrelUEnd.rotation) as Rigidbody2D;
-                rocketInstance.gameObject.GetComponent<Spirit1>().Move(1, barrelUEnd,specialDamage, specialScript.damageMultiplier,specialStatus); 
-            }
-            if (down)
-            {
-                Rigidbody2D rocketInstance;
-                rocketInstance = Instantiate(spirit1Prefab, barrelDEnd.position, barrelDEnd.rotation) as Rigidbody2D;
-                rocketInstance.gameObject.GetComponent<Spirit1>().Move(3, barrelDEnd,specialDamage, specialScript.damageMultiplier, specialStatus);
-            }
-            if (right)
-            {
-                Rigidbody2D rocketInstance;
-                rocketInstance = Instantiate(spirit1Prefab, barrelREnd.position, barrelREnd.rotation) as Rigidbody2D;
-                rocketInstance.gameObject.GetComponent<Spirit1>().Move(2, barrelREnd,specialDamage, specialScript.damageMultiplier, specialStatus);
-            }
-            if (left)
-            {
-                Rigidbody2D rocketInstance;
-                rocketInstance = Instantiate(spirit1Prefab, barrelLEnd.position, barrelLEnd.rotation) as Rigidbody2D;
-                rocketInstance.gameObject.GetComponent<Spirit1>().Move(4, barrelLEnd,specialDamage, specialScript.damageMultiplier, specialStatus);
-            }
-            
+            anim.SetTrigger("special");
         }
-        anim.SetTrigger("special");
     }
 
     public void MoveUp (float value) {
