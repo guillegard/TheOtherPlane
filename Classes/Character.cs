@@ -40,7 +40,6 @@ public class Character : MonoBehaviour {
 	public virtual void Start()
 	{
 		anim = GetComponentInChildren <Animator>();
-		spirits = new GameObject[3];
 		right = true;
 	}
 

@@ -8,26 +8,16 @@ public class Enemy : MonoBehaviour
 	[Header("Enemy Settings")]
 	public string nameE;
     public float spiritReward;
-    public float moveSpeedMultiplier;
-    public float hpMultiplier;
-    public float damageMultipler;
-    public float heavyDamageMultiplier;
-    public float coolDownMultiplier;
-    public float heavyCooldownMultiplier;
     public bool isBoss;
-    public float specialMultiplier;
-
-    //public variables
-    public float moveSpeed;
     public float maxHp;
     public float maxSpirit;
     public float hp;
     public float spirit;
     public Weapon equippedWeapon;
-    int equippedSpecial = -1;
     public Status status;
     public float damage;
     public float cooldown;
+	public float heavyDamage;
     public float heavyCooldown;
     public float specialDamage;
 
@@ -47,15 +37,19 @@ public class Enemy : MonoBehaviour
     private bool down = false;
     private bool left = false;
     private bool right = false;
-    private bool hasKey = false;
 
-    public Rigidbody2D spirit1Prefab;
-    public Transform barrelUEnd;
-    public Transform barrelDEnd;
-    public Transform barrelREnd;
-    public Transform barrelLEnd;
+    public GameObject spirit1Prefab;
 
-    public void Attack()
+
+	// Use this for initialization
+	public void Start()
+	{
+		anim = GetComponentInChildren<Animator>();
+		right = true;
+	}
+
+
+	public void MeleeAttack()
     {
         anim.SetTrigger("attack");
         RaycastHit2D[] bodies;
@@ -126,6 +120,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+	public void RangedAttack()
+	{
+
+	}
+
+	public void HeavyAttack()
+	{
+
+	}
+
+	public void Special()
+	{
+
+	}
+
     public void TakeDamage(float damage, Status s)
     {
         hp -= damage;
@@ -139,19 +148,7 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().GetSpirit(spiritReward);
+        PlayerManager.instance.player.GetSpirit(spiritReward);
         Destroy(this.gameObject);   
     }
-
-
-
-    // Use this for initialization
-    public  void Start () {
-		
-	}
-
-	// Update is called once per frame
-	public void Update () {
-		
-	}
 }

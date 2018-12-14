@@ -11,5 +11,5 @@ public class PlayerManager : MonoBehaviour {
 		instance = this;
 	}
 
-	public GameObject player; 
+	public Character player; 
 }

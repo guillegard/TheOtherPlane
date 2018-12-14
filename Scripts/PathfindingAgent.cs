@@ -5,30 +5,9 @@ using UnityEngine;
 public class PathfindingAgent : MonoBehaviour {
 
 	Vector3 target;
-	float speed = 5;
+	public float moveSpeed = 5;
 	Vector3[] path;
 	int targetIndex;
-
-	void Awake () {
-		Character character = GetComponent<Character>();
-		if (character != null)
-		{
-			speed = character.moveSpeed;
-		}
-		else
-		{
-			Enemy enemyPawn = GetComponent<Enemy>();
-
-			if (enemyPawn != null)
-			{
-				speed = enemyPawn.moveSpeed;
-			}
-			else
-			{
-				print("No enemy or character attached to this gameobject. Cannot move it");
-			}
-		}
-	}
 	
 	public void MoveTowards(Vector3 target)
 	{
@@ -70,7 +49,7 @@ public class PathfindingAgent : MonoBehaviour {
 				currentWaypoint = path[targetIndex];
 			}
 
-			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);
 			yield return null; //wait until next frame
 		}
 	}

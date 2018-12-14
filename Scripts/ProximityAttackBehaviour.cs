@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 {
 	[HideInInspector]
-	public Transform target;
+	public Character target;
 
 	EnemyController controller;
 	Enemy pawn;
@@ -25,7 +25,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 
 	void Start()
 	{
-		target = PlayerManager.instance.player.transform;
+		target = PlayerManager.instance.player;
 		controller = GetComponent<EnemyController>();
 		pawnAgent = GetComponent<PathfindingAgent>();
 
@@ -45,7 +45,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 	void Update()
 	{
 		//Player within detection radius
-		float dist = (target.position - transform.position).magnitude;
+		float dist = (target.transform.position - transform.position).magnitude;
 		if (dist <= detectionRadius )
 		{
 			//Player within attack radius
@@ -53,7 +53,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 			{
 				currentAttackCD = attackCooldown;
 
-				pawn.Attack();
+				pawn.MeleeAttack();
 				print("Enemy attacking");
 
 				pursuing = false;
@@ -101,7 +101,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 
 	Vector3 GetNearestAdyacent()
 	{
-		Transform[] adyacents = target.gameObject.GetComponent<Player>().GetAdyacentTransforms();
+		Transform[] adyacents = target.GetAdyacentTransforms();
 		Vector3 closest = new Vector3(0,0,0);
 		float closestSqrDist = Mathf.Infinity;
 
