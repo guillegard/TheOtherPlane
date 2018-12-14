@@ -9,7 +9,7 @@ public class PathfindingAgent : MonoBehaviour {
 	Vector3[] path;
 	int targetIndex;
 
-	void Start () {
+	void Awake () {
 		Character character = GetComponent<Character>();
 		if (character != null)
 		{
@@ -38,6 +38,7 @@ public class PathfindingAgent : MonoBehaviour {
 
 	public void Stop()
 	{
+		targetIndex = 0;
 		StopCoroutine("FollowPath");
 	}
 
@@ -63,6 +64,7 @@ public class PathfindingAgent : MonoBehaviour {
 				//Reached target, end coroutine
 				if (targetIndex >= path.Length)
 				{
+					targetIndex = 0;
 					yield break;
 				}
 				currentWaypoint = path[targetIndex];

@@ -42,7 +42,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 		attackTrigger.radius = attackRadius;*/
 	}
 
-	public void Tick()
+	void Update()
 	{
 		//Player within detection radius
 		float dist = (target.position - transform.position).magnitude;
@@ -89,6 +89,9 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 
 	void OnDrawGizmos()
 	{
+		if (!this.enabled)
+			return;
+
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, detectionRadius);
 

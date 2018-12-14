@@ -5,29 +5,23 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
+	[HideInInspector]
 	public Enemy pawn;
-
-	public IEnemyBehaviour enemyBehaviour;
+	IEnemyBehaviour enemyBehaviour;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		enemyBehaviour = GetComponent<IEnemyBehaviour>();
+		pawn = GetComponent<Enemy>();
 
 		if (pawn == null)
 		{
 			print("Enemy controller does not have an enemy to control");
 		}
-
-
 		if (enemyBehaviour == null) {
 			print("Enemy controller does not have a behaviour");
 		}
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if (enemyBehaviour != null)
-			enemyBehaviour.Tick();
-	}
 }

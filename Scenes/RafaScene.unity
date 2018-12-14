@@ -965,7 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2533412624c725b44add80f9a90d9980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayGridGizmos: 1
+  displayGridGizmos: 0
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1002,11 +1002,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -21.98
+      value: -22.63
       objectReference: {fileID: 0}
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.22
+      value: -3.28
       objectReference: {fileID: 0}
     - target: {fileID: 4684215796339236, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1036,7 +1036,7 @@ Prefab:
         type: 2}
       propertyPath: pawn
       value: 
-      objectReference: {fileID: 907654448}
+      objectReference: {fileID: 0}
     - target: {fileID: 114595485648646896, guid: cfa99917cf5361f4bb45cfff22e50365,
         type: 2}
       propertyPath: moveSpeed
@@ -1063,6 +1063,11 @@ Prefab:
         type: 2}
       propertyPath: attackRadius
       value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 114253403226962466, guid: cfa99917cf5361f4bb45cfff22e50365,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 212224699666128322, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
@@ -1485,12 +1490,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1753831087829878, guid: cfa99917cf5361f4bb45cfff22e50365,
     type: 2}
   m_PrefabInternal: {fileID: 381080620}
---- !u!114 &907654448 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114595485648646896, guid: cfa99917cf5361f4bb45cfff22e50365,
-    type: 2}
-  m_PrefabInternal: {fileID: 381080620}
-  m_Script: {fileID: 11500000, guid: 80ba616fbc80fba4fb1d9c4ea3d12215, type: 3}
 --- !u!114 &907654449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,6 +1501,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4c92d2cfd0a684f97d877c2cfe8003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &907654451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 907654445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b12db4bac86d74a8cb6e4636f62c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints:
+  - {x: 5.77, y: 0, z: 0}
+  - {x: 2.97, y: -2.25, z: 0}
+  - {x: -0.05, y: -0.01, z: 0}
+  shouldLoopAround: 0
+  proximityTolerance: 0.005
 --- !u!1 &1017701109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2415,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1472171272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -1.7, z: 0}
+  m_LocalPosition: {x: -0.5, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1397737407}
