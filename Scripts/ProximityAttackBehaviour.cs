@@ -10,13 +10,18 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 	EnemyController controller;
 	Enemy pawn;
 
-	public float detectionRadius = 7;
-	public float attackRadius = 2;
-	public float cooldownTime = 4;//in seconds
+	public float detectionRadius = 7f;
+	public float attackRadius = 2f;
+	public float attackCooldown = 4f; //in seconds
+	public float pathReadjustCooldown = 0.5f; //in seconds
 
-	float currentCooldown = 0;
+	float currentAttackCD = 0;
+	float currentReadjustCD = 0;
 	bool pursuing = false;      //Whether this enemy is trying to reach the player or not
+
 	PathfindingAgent pawnAgent;
+	/*CircleCollider2D detectionTrigger;
+	CircleCollider2D attackTrigger;*/
 
 	void Start()
 	{
@@ -29,17 +34,53 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 			pawn = controller.pawn;
 		}
 
+		/*detectionTrigger = gameObject.AddComponent<CircleCollider2D>();
+		detectionTrigger.isTrigger = true;
+		detectionTrigger.radius = detectionRadius;
+		attackTrigger = gameObject.AddComponent<CircleCollider2D>();
+		attackTrigger.isTrigger = true;
+		attackTrigger.radius = attackRadius;*/
 	}
 
 	public void Tick()
 	{
-		if (currentCooldown <= 0)
+		//Player within detection radius
+		float sqrDist = (target.position - pawn.gameObject.transform.position).sqrMagnitude;
+		if (sqrDist <= detectionRadius * detectionRadius)
+		{
+			//Player within attack radius
+			if (sqrDist <= attackRadius * attackRadius && currentAttackCD <= 0)
+			{
+				currentAttackCD = attackCooldown;
+				currentReadjustCD = pathReadjustCooldown;
+
+				pawn.Attack();
+			}
+
+			//Adjust path only if we can attack
+			if (currentReadjustCD <= 0 && currentAttackCD <= 0)
+			{
+				Vector3 target = GetNearestAdyacent();
+				pawnAgent.MoveTowards(target);
+				currentReadjustCD = pathReadjustCooldown;
+			}
+		}
+
+		//Process cooldowns
+		if (currentAttackCD > 0)
+			currentAttackCD -= Time.deltaTime;
+
+		if (currentReadjustCD > 0)
+			currentReadjustCD -= Time.deltaTime;
+
+		/*
+		if (currentAttackCD <= 0)
 		{
 			print("Enemy standing by");
 			float sqrDist = (target.position - pawn.gameObject.transform.position).sqrMagnitude;
 			if (sqrDist <= detectionRadius * detectionRadius)
 			{
-				print("Target detected " + target.position);
+				print("Target detected " + target.position + ", " + target.gameObject.name);
 				if (!pursuing)
 				{
 					pursuing = true;
@@ -54,7 +95,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 					pawn.Attack();
 					pursuing = false;
 					pawnAgent.Stop();
-					currentCooldown = cooldownTime;
+					currentAttackCD = attackCooldown;
 				}
 
 			}
@@ -68,8 +109,8 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 		else
 		{
 			print("Enemy in cooldown");
-			currentCooldown -= Time.deltaTime;
-		}
+			currentAttackCD -= Time.deltaTime;
+		}*/
 	}
 
 	void OnDrawGizmos()
