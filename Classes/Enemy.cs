@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
     public Status status;
     public float damage;
     public float cooldown;
+	public float rangedDamage;
+	public float rangedCooldown;
 	public float heavyDamage;
     public float heavyCooldown;
     public float specialDamage;

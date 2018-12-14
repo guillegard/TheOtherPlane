@@ -12,7 +12,6 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 
 	public float detectionRadius = 7f;
 	public float attackRadius = 2f;
-	public float attackCooldown = 4f; //in seconds
 	public float pathReadjustCooldown = 1f; //in seconds
 
 	float currentAttackCD = 0;
@@ -51,7 +50,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 			//Player within attack radius
 			if ((dist <= attackRadius ) && currentAttackCD <= 0)
 			{
-				currentAttackCD = attackCooldown;
+				currentAttackCD = pawn.cooldown;
 
 				pawn.MeleeAttack();
 				print("Enemy attacking");
@@ -68,10 +67,6 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 				print("Enemy pursuing to" + target);
 				currentReadjustCD = pathReadjustCooldown;
 			}
-
-			//Readjustment cooldown
-			if (currentReadjustCD > 0 && (pursuing || attackCooldown > 0))
-				currentReadjustCD -= Time.deltaTime;
 		}
 		else if (pursuing)
 		{
@@ -84,7 +79,11 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 		if (currentAttackCD > 0)
 			currentAttackCD -= Time.deltaTime;
 
-		
+		//Readjustment cooldown
+		if (currentReadjustCD > 0)
+			currentReadjustCD -= Time.deltaTime;
+
+
 	}
 
 	void OnDrawGizmos()

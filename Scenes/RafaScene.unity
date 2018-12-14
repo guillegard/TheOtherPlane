@@ -258,6 +258,30 @@ Prefab:
       propertyPath: spiritReward
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 1753831087829878, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1139377277879302, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1197813641692264, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893827787449504, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1057889564138028, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944076148439436, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfa99917cf5361f4bb45cfff22e50365, type: 2}
   m_IsPrefabAsset: 0
