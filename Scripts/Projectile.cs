@@ -15,6 +15,8 @@ public class Projectile : MonoBehaviour {
 	private void Awake()
 	{
 		detectionCollider = GetComponent<Collider2D>();
+
+		Destroy(gameObject, lifeTime);
 	}
 
 	// Update is called once per frame

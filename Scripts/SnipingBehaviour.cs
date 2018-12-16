@@ -5,6 +5,7 @@ using UnityEngine;
 public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 	
 	public float detectionRadius = 7f;
+	public bool fireOnlyIfInRange = true;
 	public LayerMask detectionLayer;
 
 	Enemy pawn;
@@ -22,24 +23,40 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 		detectionTrigger = gameObject.AddComponent<CircleCollider2D>();
 		detectionTrigger.isTrigger = true;
 		detectionTrigger.radius = detectionRadius;
+
+		// Adjust radius to match
+		var matrix = detectionTrigger.transform.localToWorldMatrix;
+		var xAxisMag = matrix.GetColumn(0).magnitude;
+		var yAxisMag = matrix.GetColumn(1).magnitude;
+		var zAxisMag = matrix.GetColumn(2).magnitude;
+		
+		detectionTrigger.radius = detectionRadius / Mathf.Max(xAxisMag, yAxisMag, zAxisMag);
 	}
 
 	private void Update()
 	{
 		if (currentAttackCD > 0)
 			currentAttackCD -= Time.deltaTime;
+
+		if (detectionTrigger.IsTouchingLayers(detectionLayer) || !fireOnlyIfInRange)
+		{
+			if (currentAttackCD <= 0)
+			{
+				Fire();
+			}
+		}
+
+	}
+
+	private void Fire()
+	{
+		currentAttackCD = attackCooldown;
+		pawn.RangedAttack();
 	}
 
 	private void OnTriggerStay2D(Collider2D collision)
 	{
-		if (detectionTrigger.IsTouchingLayers(detectionLayer))
-		{
-			if (currentAttackCD <= 0)
-			{
-				currentAttackCD = attackCooldown;
-				pawn.RangedAttack();
-			}
-		}
+		print("collided " + collision.gameObject.name + ". Is touching layer: " + detectionTrigger.IsTouchingLayers(detectionLayer));
 	}
 
 	void OnDrawGizmos()
