@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
 {
 
@@ -11,13 +12,12 @@ public class Enemy : MonoBehaviour
     public bool isBoss;
     public float maxHp;
     public float maxSpirit;
-    public float hp;
-    public float spirit;
+	public float hp;
+	public float spirit;
     public Weapon equippedWeapon;
     public Status status;
     public float damage;
     public float cooldown;
-	public float rangedDamage;
 	public float rangedCooldown;
 	public float heavyDamage;
     public float heavyCooldown;
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
     private bool left = false;
     private bool right = false;
 
-    public GameObject spirit1Prefab;
+    public Projectile projectilePrefab;
 
 
 	// Use this for initialization
@@ -124,7 +124,14 @@ public class Enemy : MonoBehaviour
 
 	public void RangedAttack()
 	{
+		Vector3 startPos = transform.position;
+		Vector3 targetPos = PlayerManager.instance.player.transform.position;
 
+		Vector3 right = (targetPos - startPos).normalized;
+		Vector3 forward = transform.forward;
+
+		Projectile projectile = Instantiate(projectilePrefab, startPos, Quaternion.LookRotation(forward, Vector3.Cross(forward, right)));
+		Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 	}
 
 	public void HeavyAttack()
