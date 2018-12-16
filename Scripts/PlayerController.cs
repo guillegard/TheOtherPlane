@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+
     public GameObject character;
     Character characterScript;
-	// Use this for initialization
+	
+    // Use this for initialization
 	void Start () {
         characterScript = character.GetComponent<Character>();
 	}

@@ -5,6 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+    //HP UI
+    public GameObject hpBar;
+
     public string nameE;
     public float spiritReward;
     public float moveSpeedMultiplier;
@@ -128,6 +131,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage, Status s)
     {
         hp -= damage;
+        float normalized = hp / maxHp;
+        hpBar.transform.localScale = new Vector3(normalized, 1f);
         if (s != null)
             status = s;
         if (hp <= 0)
@@ -142,8 +147,6 @@ public class Enemy : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().GetSpirit(spiritReward);
         Destroy(this.gameObject);   
     }
-
-
 
     // Use this for initialization
     public  void Start () {
