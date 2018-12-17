@@ -25,6 +25,7 @@ public class PathfindingAgent : MonoBehaviour {
 	{
 		if (pathSuccess)
 		{
+			targetIndex = 0;
 			path = newPath;
 			StopCoroutine("FollowPath");
 			StartCoroutine("FollowPath");

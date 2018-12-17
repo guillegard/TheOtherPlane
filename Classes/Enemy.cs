@@ -5,29 +5,37 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public string nameE;
 
 	[Header("Enemy Settings")]
-	public string nameE;
     public float spiritReward;
     public bool isBoss;
     public float maxHp;
     public float maxSpirit;
-	public float hp;
-	public float spirit;
-    public Weapon equippedWeapon;
-    public Status status;
     public float damage;
     public float cooldown;
 	public float rangedCooldown;
 	public float heavyDamage;
     public float heavyCooldown;
     public float specialDamage;
+    public Projectile projectilePrefab;
+
+
+    [Header("Control variables")]
+	public float hp;
+	public float spirit;
+    public Weapon equippedWeapon;
+    public Status status;
+    
+    [Header("UI variables")]
+    public GameObject hpBar;
 
     [HideInInspector]
     public Vector2 direction = new Vector2(1, 0);
     [HideInInspector]
     public Vector2 velocity;
 
+    [Header("Adyacent objects")]
     public GameObject grabberU;
     public GameObject grabberD;
     public GameObject grabberR;
@@ -40,16 +48,14 @@ public class Enemy : MonoBehaviour
     private bool left = false;
     private bool right = false;
 
-    public Projectile projectilePrefab;
-
-
 	// Use this for initialization
-	public void Start()
+	public void Awake()
 	{
+		hp = maxHp;
+		spirit = maxSpirit;
 		anim = GetComponentInChildren<Animator>();
 		right = true;
 	}
-
 
 	public void MeleeAttack()
     {
@@ -144,6 +150,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage, Status s)
     {
         hp -= damage;
+        float normalized = hp / maxHp;
+        hpBar.transform.localScale = new Vector3(normalized, 1f);
         if (s != null)
             status = s;
         if (hp <= 0)
@@ -154,7 +162,8 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        LevelController.KillEnemy();
         PlayerManager.instance.player.GetSpirit(spiritReward);
-        Destroy(this.gameObject);   
+        Destroy(this.gameObject);     
     }
 }

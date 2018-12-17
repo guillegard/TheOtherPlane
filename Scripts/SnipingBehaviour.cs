@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 	
@@ -8,21 +9,27 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 	public bool fireOnlyIfInRange = true;
 	public LayerMask detectionLayer;
 
+	public event Action OnPlayerDetected;
+	public event Action OnPlayerUnDetected;
+
 	Enemy pawn;
 	CircleCollider2D detectionTrigger;
 
 	float attackCooldown;
 	float currentAttackCD = 0;
+	bool attackingPlayer = false;
 
+	private void Awake()
+	{
+		detectionTrigger = gameObject.AddComponent<CircleCollider2D>();
+		detectionTrigger.isTrigger = true;
+		detectionTrigger.radius = detectionRadius;
+	}
 
 	void Start()
 	{
 		pawn = GetComponent<Enemy>();
 		attackCooldown = pawn.rangedCooldown;
-
-		detectionTrigger = gameObject.AddComponent<CircleCollider2D>();
-		detectionTrigger.isTrigger = true;
-		detectionTrigger.radius = detectionRadius;
 
 		// Adjust radius to match
 		var matrix = detectionTrigger.transform.localToWorldMatrix;
@@ -41,20 +48,32 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 		if (detectionTrigger.IsTouchingLayers(detectionLayer) || !fireOnlyIfInRange)
 		{
 			if (currentAttackCD <= 0)
-			{
 				Fire();
+
+			if (!attackingPlayer && fireOnlyIfInRange)
+			{
+				attackingPlayer = true;
+				if (OnPlayerDetected != null)
+					OnPlayerDetected();
 			}
+		}
+		else if (attackingPlayer)
+		{
+			attackingPlayer = false;
+			if (OnPlayerUnDetected != null)
+				OnPlayerUnDetected();
 		}
 
 	}
 
 	private void Fire()
 	{
+		Vector3 target = fireOnlyIfInRange ? PlayerManager.instance.player.transform.position : (Vector3)pawn.direction;
 		currentAttackCD = attackCooldown;
-		pawn.RangedAttack(PlayerManager.instance.player.transform.position);
+		pawn.RangedAttack(target);
 	}
 
-	void OnDrawGizmos()
+	void OnDrawGizmosSelected()
 	{
 		if (!this.enabled)
 			return;

@@ -28,9 +28,8 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if ((patrolPoints[currentTargetIndex] - transform.position).sqrMagnitude <= proximityTolerance)
+		if ((patrolPoints[currentTargetIndex] - transform.position).magnitude <= proximityTolerance)
 		{
-			agent.Stop();
 			if (shouldLoopAround)
 				currentTargetIndex = (currentTargetIndex + 1) % patrolPoints.Length;
 			else

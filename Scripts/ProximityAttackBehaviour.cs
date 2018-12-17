@@ -1,26 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 {
 	[HideInInspector]
 	public Character target;
 
-	EnemyController controller;
-	Enemy pawn;
-
 	public float detectionRadius = 7f;
 	public float attackRadius = 2f;
 	public float pathReadjustCooldown = 1f; //in seconds
 
-	float currentAttackCD = 0;
-	float currentReadjustCD = 0;
-	bool pursuing = false;      //Whether this enemy is trying to reach the player or not
+	public event Action OnPlayerDetected;
+	public event Action OnPlayerUnDetected;
 
+	EnemyController controller;
+	Enemy pawn;
 	PathfindingAgent pawnAgent;
 	/*CircleCollider2D detectionTrigger;
 	CircleCollider2D attackTrigger;*/
+
+	float currentAttackCD = 0;
+	float currentReadjustCD = 0;
+	bool pursuing = false;      //Whether this enemy is trying to reach the player or not
+	
 
 	void Start()
 	{
@@ -86,7 +90,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 
 	}
 
-	void OnDrawGizmos()
+	void OnDrawGizmosSelected()
 	{
 		if (!this.enabled)
 			return;

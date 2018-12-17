@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
+    //UI 
+    public RectTransform healthBar;
+    public RectTransform spiritBar;
+    public GameObject special1UIImage;
+    public GameObject special2UIImage;
+    public GameObject special3UIImage;
+
     //public variables
     public float moveSpeed;
     public float maxHp;
@@ -142,6 +149,8 @@ public class Character : MonoBehaviour {
                     if (specialScript.spiritCost > spirit)
                         return;
                     spirit = spirit - specialScript.spiritCost;
+                    float normalized = spirit / maxSpirit;
+                    spiritBar.localScale = new Vector3(normalized, 1);
                 }
                 specialScript = special.GetComponent<Special>();
                 Status specialStatus = special.GetComponent<Status>();
@@ -365,6 +374,7 @@ public class Character : MonoBehaviour {
                 col.spiritDialog();
                 special.GetComponent<Special>().unlocked = true;
                 Destroy(collider.gameObject);
+                LevelController.PickUpSpirit();
             }
         }
     }
@@ -391,20 +401,46 @@ public class Character : MonoBehaviour {
         GameObject special = SpecialIsUnlocked(sp);
         if(special != null)
         {
+            EquipUISpirit(sp);
             equippedSpecial = sp;
             //Debug.Log("Equipped");
+        }
+    }
+
+    public void EquipUISpirit(int sp)
+    {
+        switch (sp)
+        {
+            case 1:
+                special2UIImage.SetActive(false);
+                special3UIImage.SetActive(false);
+                special1UIImage.SetActive(true);
+                break;
+            case 2:
+                special1UIImage.SetActive(false);
+                special3UIImage.SetActive(false);
+                special2UIImage.SetActive(true);
+                break;
+            case 3:
+                special2UIImage.SetActive(false);
+                special1UIImage.SetActive(false);
+                special3UIImage.SetActive(true);
+                break;
         }
     }
 
     public void TakeDamage(float damage, Status s)
     {
         hp -= damage;
-        if(s != null)
+        float normalized = hp / maxHp;
+        if (s != null)
             status = s;
         if(hp <= 0)
         {
+            normalized = 0f;
             Die();
         }
+        healthBar.localScale = new Vector3(normalized, 1);
     }
 
     public void Die()
@@ -419,6 +455,8 @@ public class Character : MonoBehaviour {
         {
             spirit = maxSpirit;
         }
+        float normalized = spirit / maxSpirit;
+        spiritBar.localScale = new Vector3(normalized, 1);
     }
 	
 	// Update is called once per frame

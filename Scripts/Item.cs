@@ -15,6 +15,7 @@ public class Item : MonoBehaviour {
     public int ini;
     public int fin;
     public GameObject dialogManager;
+    public GameObject openChest;
     public string itemName;
 
 
@@ -35,6 +36,7 @@ public class Item : MonoBehaviour {
             dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
 
         }
+        openChest.SetActive(true);
         return contains.name;
     }
 
