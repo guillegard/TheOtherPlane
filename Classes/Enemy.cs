@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     public float specialDamage;
 
     [HideInInspector]
-    public Vector2 direction;
+    public Vector2 direction = new Vector2(1, 0);
     [HideInInspector]
     public Vector2 velocity;
 
@@ -122,15 +122,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-	public void RangedAttack()
+	public void RangedAttack(Vector3 target)
 	{
-		Vector3 startPos = transform.position;
-		Vector3 targetPos = PlayerManager.instance.player.transform.position;
-
-		Vector3 right = (targetPos - startPos).normalized;
+		Vector3 right = (target - transform.position).normalized;
 		Vector3 forward = transform.forward;
 
-		Projectile projectile = Instantiate(projectilePrefab, startPos, Quaternion.LookRotation(forward, Vector3.Cross(forward, right)));
+		Projectile projectile = Instantiate(projectilePrefab, transform.position, Quaternion.LookRotation(forward, Vector3.Cross(forward, right)));
 		Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 	}
 

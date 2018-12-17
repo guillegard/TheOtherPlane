@@ -878,11 +878,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4127634119697258, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -18.96
+      value: -19.967
       objectReference: {fileID: 0}
     - target: {fileID: 4127634119697258, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.13
+      value: -4.406
       objectReference: {fileID: 0}
     - target: {fileID: 4127634119697258, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_LocalPosition.z
@@ -926,35 +926,35 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1200628903296472, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1336824176426846, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1445422111791400, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1799810502046334, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1511828790299974, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1358074498080270, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1390423514560124, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1822655024976626, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
       propertyPath: m_Layer
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8efed745c698aed4ca8bfaa4caa3d500, type: 2}
@@ -1871,7 +1871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48c1d01f8e6aee6409b9ef6afdacdbce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 3.32
+  detectionRadius: 3.35
+  fireOnlyIfInRange: 1
   detectionLayer:
     serializedVersion: 2
     m_Bits: 1024

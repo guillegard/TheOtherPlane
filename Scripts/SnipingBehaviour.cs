@@ -51,12 +51,7 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 	private void Fire()
 	{
 		currentAttackCD = attackCooldown;
-		pawn.RangedAttack();
-	}
-
-	private void OnTriggerStay2D(Collider2D collision)
-	{
-		print("collided " + collision.gameObject.name + ". Is touching layer: " + detectionTrigger.IsTouchingLayers(detectionLayer));
+		pawn.RangedAttack(PlayerManager.instance.player.transform.position);
 	}
 
 	void OnDrawGizmos()

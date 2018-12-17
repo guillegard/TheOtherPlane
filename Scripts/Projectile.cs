@@ -21,7 +21,8 @@ public class Projectile : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		transform.Translate(transform.right * speed * Time.deltaTime);
+		//transform.Translate(transform.right * speed * Time.deltaTime);
+		transform.position += transform.right * speed * Time.deltaTime;
 	}
 
 	private void OnTriggerStay2D(Collider2D collider)
@@ -40,4 +41,5 @@ public class Projectile : MonoBehaviour {
 		if (!collider.isTrigger)
 			Destroy(gameObject);
 	}
+
 }
