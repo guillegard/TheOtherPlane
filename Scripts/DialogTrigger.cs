@@ -23,7 +23,7 @@ public class DialogTrigger : MonoBehaviour {
         //Debug.Log("Colision");
         if (collision.gameObject.name == "Player")
         {
-            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, true);
+            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, true, true);
             Destroy(this.gameObject);
         }
     }

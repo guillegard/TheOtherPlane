@@ -24,6 +24,8 @@ public class Character : MonoBehaviour {
     public float cooldown;
 	public float heavyCooldown;
     public float specialDamage;
+    public Inventory inventory;
+    public GameObject inventoryUI;
 
 	[HideInInspector]
     public Vector2 direction;
@@ -334,40 +336,47 @@ public class Character : MonoBehaviour {
 
     void ItemInteract(Collider2D collider)
     {
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Key)
+        Item item = collider.gameObject.GetComponent<Item>();
+        if(item == null)
         {
-            Destroy(collider.gameObject);
-            hasKey = true;
+            return;
         }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Door && hasKey)
+        else
         {
-            Destroy(collider.gameObject);
-            hasKey = false;
-        }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Chest)
-        {
-            string item = collider.gameObject.GetComponent<Item>().OpenChest();
-            if(item != null)
+            if (item.type == Item.Type.Key)
             {
-                
-            }
-            Destroy(collider.gameObject);
-        }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Special)
-        {
-            Item col = collider.GetComponent<Item>();
-            Debug.Log(col.itemName);
-            GameObject special = GameObject.Find("Spirits/"+col.itemName);
-            if(special != null)
-            {
-                col.spiritDialog();
-                special.GetComponent<Special>().unlocked = true;
                 Destroy(collider.gameObject);
-                LevelController.PickUpSpirit();
+                hasKey = true;
+            }
+
+            if (item.type == Item.Type.Door && hasKey)
+            {
+                Destroy(collider.gameObject);
+                hasKey = false;
+            }
+
+            if (item.type == Item.Type.Chest)
+            {
+                Item itemInChest = collider.gameObject.GetComponent<Item>().OpenChest();
+                if (itemInChest != null)
+                {
+                    inventory.AddItem(itemInChest.type);
+                }
+                Destroy(collider.gameObject);
+            }
+
+            if (item.type == Item.Type.Special)
+            {
+                Item col = collider.GetComponent<Item>();
+                Debug.Log(col.itemName);
+                GameObject special = GameObject.Find("Spirits/" + col.itemName);
+                if (special != null)
+                {
+                    col.spiritDialog();
+                    special.GetComponent<Special>().unlocked = true;
+                    Destroy(collider.gameObject);
+                    LevelController.PickUpSpirit();
+                }
             }
         }
     }
@@ -456,6 +465,18 @@ public class Character : MonoBehaviour {
         }
         float normalized = spirit / maxSpirit;
         spiritBar.localScale = new Vector3(normalized, 1);
+    }
+
+    public void OpenInventory()
+    {
+        if (inventoryUI.activeSelf)
+        {
+            inventoryUI.SetActive(false);
+        }
+        else
+        {
+            inventoryUI.SetActive(true);
+        }
     }
 	
 	// Update is called once per frame

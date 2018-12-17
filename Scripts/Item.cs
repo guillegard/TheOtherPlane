@@ -6,17 +6,18 @@ public class Item : MonoBehaviour {
 
     public enum Type
     {
-        Key, Door, Chest, Special
+        Key, Door, Chest, Special, Potion
     }
 
     public Type type;
-    public GameObject contains;
+    public Item contains;
     public bool hasDialog;
     public int ini;
     public int fin;
     public GameObject dialogManager;
     public GameObject openChest;
     public string itemName;
+    public bool isTriggerTrigger;
 
 
     // Use this for initialization
@@ -29,21 +30,20 @@ public class Item : MonoBehaviour {
 
 	}
 
-    public string OpenChest()
+    public Item OpenChest()
     {
         if (hasDialog)
         {
-            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
-
+            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false, isTriggerTrigger);
         }
         openChest.SetActive(true);
-        return contains.name;
+        return contains;
     }
 
     public void spiritDialog()
     {
         if(hasDialog)
-            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false);
+            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, false, isTriggerTrigger);
     }
 
 }

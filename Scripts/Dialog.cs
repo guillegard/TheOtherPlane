@@ -41,7 +41,7 @@ public class Dialog : MonoBehaviour {
         {
             trigger.SetActive(false);
         }
-        StartDialog(index, finIndex,true);
+        StartDialog(index, finIndex,true,true);
 	}
 
     public void Next()
@@ -65,12 +65,14 @@ public class Dialog : MonoBehaviour {
         }
     }
 
-    public void StartDialog(int ini, int fin, bool isTrigger)
+    public void StartDialog(int ini, int fin, bool isTrigger, bool isTriggerTrigger)
     {
-        if (triggerIndex < triggers.Length) 
+        if (triggerIndex < triggers.Length && isTriggerTrigger) 
             triggers[triggerIndex].SetActive(true);
-        if(isTrigger)
+
+        if (isTrigger)
             triggerIndex++;
+
         iBG.SetActive(true);
         textBG.SetActive(true);
         aBG.SetActive(true);
