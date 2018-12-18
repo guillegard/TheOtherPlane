@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4366019446544090}
   - component: {fileID: 61222626379432040}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: GrabberU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4486048329575424}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Adyacents
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4331615769637304}
   - component: {fileID: 61415219418087824}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: GrabberR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4007245323278968}
   - component: {fileID: 61442668362289040}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: GrabberL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4616711258640368}
   - component: {fileID: 61514693492462520}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: GrabberD
   m_TagString: Untagged
   m_Icon: {fileID: 0}

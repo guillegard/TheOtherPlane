@@ -50,7 +50,7 @@ public class Spirit1 : MonoBehaviour {
             return;
         }
 
-        if(collision.gameObject.GetComponent<Enemy>() != null)
+        if(collision.gameObject.GetComponent<Enemy>() != null && !collision.isTrigger)
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, status);
         }

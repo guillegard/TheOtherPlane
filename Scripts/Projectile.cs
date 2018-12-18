@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour {
 
 	private void OnTriggerStay2D(Collider2D collider)
 	{
-		if (detectionCollider.IsTouchingLayers(damageLayer))
+		if (detectionCollider.IsTouchingLayers(damageLayer) && !collider.isTrigger)
 		{
 			Character player = collider.gameObject.GetComponent<Character>();
 			if (player != null)

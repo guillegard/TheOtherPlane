@@ -64,69 +64,32 @@ public class Character : MonoBehaviour {
             if (up)
             {
                 bodies = Physics2D.BoxCastAll(grabberU.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-                if (bodies.Length > 1)
-                {
-                    for (int i = 1; i < bodies.Length; i++)
-                    {
-                        GameObject enemy = bodies[i].collider.gameObject;
-                        if (enemy.GetComponent<Enemy>() != null)
-                        {
-                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
-                        }
-                    }
-                }
             }
-
-            if (down)
+            else if (down)
             {
                 bodies = Physics2D.BoxCastAll(grabberD.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-                if (bodies.Length > 1)
-                {
-                    for (int i = 1; i < bodies.Length; i++)
-                    {
-                        GameObject enemy = bodies[i].collider.gameObject;
-                        if (enemy.GetComponent<Enemy>() != null)
-                        {
-                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
-                        }
-                    }
-                }
-
             }
-
-            if (right)
+            else if (right)
             {
                 bodies = Physics2D.BoxCastAll(grabberR.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-                if (bodies.Length > 1)
-                {
-                    for (int i = 1; i < bodies.Length; i++)
-                    {
-                        GameObject enemy = bodies[i].collider.gameObject;
-                        if (enemy.GetComponent<Enemy>() != null)
-                        {
-                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
-                        }
-                    }
-                }
-
             }
-
-            if (left)
+            else //if (left)
             {
                 bodies = Physics2D.BoxCastAll(grabberL.transform.position, new Vector2(0.1f, 0.1f), 0, new Vector2(0, 1), 0.1f);
-                if (bodies.Length > 1)
-                {
-                    for (int i = 1; i < bodies.Length; i++)
-                    {
-                        GameObject enemy = bodies[i].collider.gameObject;
-                        if (enemy.GetComponent<Enemy>() != null)
-                        {
-                            enemy.GetComponent<Enemy>().TakeDamage(damage, null);
-                        }
-                    }
-                }
             }
-        }
+
+			if (bodies.Length > 1)
+			{
+				for (int i = 1; i < bodies.Length; i++)
+				{
+					GameObject enemy = bodies[i].collider.gameObject;
+					if (enemy.GetComponent<Enemy>() != null && !bodies[i].collider.isTrigger)
+					{
+						enemy.GetComponent<Enemy>().TakeDamage(damage, null);
+					}
+				}
+			}
+		}
     }
 
     public void HeavyAttack () {
