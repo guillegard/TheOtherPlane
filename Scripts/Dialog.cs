@@ -13,6 +13,7 @@ public class Dialog : MonoBehaviour {
     public int finIndex;
     public Color color;
     public float speed;
+    private bool firstTrigger;
 
     public GameObject a1;
     public GameObject a2;
@@ -30,6 +31,7 @@ public class Dialog : MonoBehaviour {
     {
         foreach(char l in sentences[index].ToCharArray())
         {
+            
             text.text += l;
             yield return new WaitForSeconds(speed);
         }
@@ -41,7 +43,8 @@ public class Dialog : MonoBehaviour {
         {
             trigger.SetActive(false);
         }
-        StartDialog(index, finIndex,true);
+        StartDialog(index, finIndex,false,false);
+        firstTrigger = true;
 	}
 
     public void Next()
@@ -62,23 +65,35 @@ public class Dialog : MonoBehaviour {
             iBG.SetActive(false);
             textBG.SetActive(false);
             aBG.SetActive(false);
+            if(firstTrigger){
+                triggers[triggerIndex].SetActive(true);
+                triggerIndex++;
+                triggers[triggerIndex].SetActive(true);
+                triggerIndex++;
+                firstTrigger = false;
+            }
         }
     }
 
-    public void StartDialog(int ini, int fin, bool isTrigger)
+    public void StartDialog(int ini, int fin, bool isTrigger, bool isTriggerTrigger)
     {
-        if (triggerIndex < triggers.Length) 
+        if (triggerIndex < triggers.Length && isTriggerTrigger) 
             triggers[triggerIndex].SetActive(true);
-        if(isTrigger)
+
+        if (isTrigger)
             triggerIndex++;
-        iBG.SetActive(true);
-        textBG.SetActive(true);
-        aBG.SetActive(true);
-        character.GetComponent<Animator>().SetBool("isMoving", false);
-        index = ini;
-        finIndex = fin;
-        playerController.GetComponent<PlayerController>().enabled = false;
-        StartCoroutine(Type());
+
+        if (!iBG.activeSelf)
+        {
+            iBG.SetActive(true);
+            textBG.SetActive(true);
+            aBG.SetActive(true);
+            character.GetComponent<Animator>().SetBool("isMoving", false);
+            index = ini;
+            finIndex = fin;
+            playerController.GetComponent<PlayerController>().enabled = false;
+            StartCoroutine(Type());
+        }
     }
 	
 	// Update is called once per frame

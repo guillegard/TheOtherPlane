@@ -7,12 +7,11 @@ public class Character : MonoBehaviour, IDamageable {
     //UI 
     public RectTransform healthBar;
     public RectTransform spiritBar;
-    public GameObject special1UIImage;
-    public GameObject special2UIImage;
-    public GameObject special3UIImage;
+    public GameObject[] specialUIImage;
+
 
     //public variables
-    public float moveSpeed;
+    public float moveSpeed = 1;
     public float maxHp;
     public float maxSpirit;
     public float hp;
@@ -24,6 +23,10 @@ public class Character : MonoBehaviour, IDamageable {
     public float cooldown;
 	public float heavyCooldown;
     public float specialDamage;
+    public Inventory inventory;
+    public GameObject inventoryUI;
+    public Dialog dialogManager;
+    public GameObject keyUI;
 
 	[HideInInspector]
     public Vector2 direction;
@@ -43,12 +46,6 @@ public class Character : MonoBehaviour, IDamageable {
     private bool right = false;
     private bool hasKey = false;
 
-	// Use this for initialization
-	public virtual void Start()
-	{
-		anim = GetComponentInChildren <Animator>();
-		right = true;
-	}
 
     public Rigidbody2D spirit1Prefab;
     public Transform barrelUEnd;
@@ -162,7 +159,7 @@ public class Character : MonoBehaviour, IDamageable {
                     left = false;
                     right = false;
                 }
-                transform.Translate(Vector3.down * Time.deltaTime * 3);
+                transform.Translate(Vector3.down * Time.deltaTime * moveSpeed);
             }
             else if (value > 0)
             {
@@ -175,7 +172,7 @@ public class Character : MonoBehaviour, IDamageable {
                     down = false;
                     right = false;
                 }
-                transform.Translate(Vector3.up * Time.deltaTime * 3);
+                transform.Translate(Vector3.up * Time.deltaTime * moveSpeed);
             }
         }
     }
@@ -199,7 +196,7 @@ public class Character : MonoBehaviour, IDamageable {
                 }
                 if (!IsAttacking())
                 {
-                    transform.Translate(Vector3.right * Time.deltaTime * 3);
+                    transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
                     //grabber.transform.Translate(new Vector3(transform.position.x + 0.18f, transform.position.y, 0f));
                 }
                     
@@ -218,7 +215,7 @@ public class Character : MonoBehaviour, IDamageable {
                 }
                 if (!IsAttacking())
                 {
-                    transform.Translate(Vector3.left * Time.deltaTime * 3);
+                    transform.Translate(Vector3.left * Time.deltaTime * moveSpeed);
                 }
                     
             }
@@ -304,43 +301,62 @@ public class Character : MonoBehaviour, IDamageable {
 
     void ItemInteract(Collider2D collider)
     {
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Key)
+        Item item = collider.gameObject.GetComponent<Item>();
+        if(item == null)
         {
-            Destroy(collider.gameObject);
-            hasKey = true;
+            return;
         }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Door && hasKey)
+        else
         {
-            Destroy(collider.gameObject);
-            hasKey = false;
-        }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Chest)
-        {
-            string item = collider.gameObject.GetComponent<Item>().OpenChest();
-            if(item != null)
+            if (item.type == Item.Type.Key)
             {
-                
-            }
-            Destroy(collider.gameObject);
-        }
-
-        if (collider.gameObject.GetComponent<Item>().type == Item.Type.Special)
-        {
-            Item col = collider.GetComponent<Item>();
-            Debug.Log(col.itemName);
-            GameObject special = GameObject.Find("Spirits/"+col.itemName);
-            if(special != null)
-            {
-                col.spiritDialog();
-                special.GetComponent<Special>().unlocked = true;
                 Destroy(collider.gameObject);
-                LevelController.PickUpSpirit();
+                hasKey = true;
+                keyUI.SetActive(true);
+            }
+
+            if (item.type == Item.Type.Door && hasKey)
+            {
+                Destroy(collider.gameObject);
+                hasKey = false;
+                keyUI.SetActive(false);
+            }
+
+            if (item.type == Item.Type.Chest)
+            {
+                Item itemInChest = collider.gameObject.GetComponent<Item>().OpenChest();
+                if (itemInChest != null)
+                {
+                    inventory.AddItem(itemInChest.type);
+                }
+                Destroy(collider.gameObject);
+            }
+
+            if (item.type == Item.Type.Special)
+            {
+                Item col = collider.GetComponent<Item>();
+                Debug.Log(col.itemName);
+                GameObject special = GameObject.Find("Spirits/" + col.itemName);
+                if (special != null)
+                {
+                    col.spiritDialog();
+                    special.GetComponent<Special>().unlocked = true;
+                    Destroy(collider.gameObject);
+                    LevelController.PickUpSpirit();
+                }
             }
         }
     }
+    
+	// Use this for initialization
+	public virtual void Start () {
+        float normalized = hp / maxHp;
+        healthBar.localScale = new Vector3(normalized, 1);
+        normalized = spirit / maxSpirit;
+        spiritBar.localScale = new Vector3(normalized, 1);
+        anim = GetComponent<Animator>();
+        right = true;
+	}
 
     public GameObject SpecialIsUnlocked(int sp)
     {
@@ -372,23 +388,16 @@ public class Character : MonoBehaviour, IDamageable {
 
     public void EquipUISpirit(int sp)
     {
-        switch (sp)
+        for(int i = 0; i < specialUIImage.Length; i++)
         {
-            case 1:
-                special2UIImage.SetActive(false);
-                special3UIImage.SetActive(false);
-                special1UIImage.SetActive(true);
-                break;
-            case 2:
-                special1UIImage.SetActive(false);
-                special3UIImage.SetActive(false);
-                special2UIImage.SetActive(true);
-                break;
-            case 3:
-                special2UIImage.SetActive(false);
-                special1UIImage.SetActive(false);
-                special3UIImage.SetActive(true);
-                break;
+            if(i == sp - 1)
+            {
+                specialUIImage[i].SetActive(true);
+            }
+            else
+            {
+                specialUIImage[i].SetActive(false);
+            }
         }
     }
 
@@ -421,9 +430,68 @@ public class Character : MonoBehaviour, IDamageable {
         float normalized = spirit / maxSpirit;
         spiritBar.localScale = new Vector3(normalized, 1);
     }
-	
-	// Update is called once per frame
-	public virtual void Update () {
+
+    public void OpenInventory()
+    {
+        if (inventoryUI.activeSelf)
+        {
+            inventoryUI.SetActive(false);
+        }
+        else
+        {
+            inventoryUI.SetActive(true);
+            inventoryUI.GetComponent<InventoryUI>().UpdateInventory();
+        }
+    }
+
+    public void UsePotion()
+    {
+        if (!(hp == maxHp))
+        {
+            if (Potion.quantity > 0)
+            {
+                Potion.quantity -= 1;
+                inventoryUI.GetComponent<InventoryUI>().UpdateInventory();
+                hp += Potion.hpReward;
+                if (hp > maxHp)
+                {
+                    hp = maxHp;
+                }
+                float normalized = hp / maxHp;
+                healthBar.localScale = new Vector3(normalized, 1);
+            }
+        }
+        else
+        {
+            dialogManager.StartDialog(dialogManager.sentences.Length - 1, dialogManager.sentences.Length, false, false);
+        }
+    }
+
+    public void UseSpiritPotion()
+    {
+        if (!(spirit == maxSpirit))
+        {
+            if (Potion.spiritQuantity > 0)
+            {
+                Potion.spiritQuantity -= 1;
+                inventoryUI.GetComponent<InventoryUI>().UpdateInventory();
+                spirit += Potion.spiritReward;
+                if (spirit > maxSpirit)
+                {
+                    spirit = maxSpirit;
+                }
+                float normalized = spirit / maxSpirit;
+                spiritBar.localScale = new Vector3(normalized, 1);
+            }
+        }
+        else
+        {
+            dialogManager.StartDialog(dialogManager.sentences.Length - 1, dialogManager.sentences.Length, false, false);
+        }
+    }
+
+    // Update is called once per frame
+    public virtual void Update () {
         
     }
 

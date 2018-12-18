@@ -7,6 +7,8 @@ public class DialogTrigger : MonoBehaviour {
     public GameObject dialogManager;
     public int ini;
     public int fin;
+    public bool isInstruction;
+    public Instructions instruction;
 
 	// Use this for initialization
 	void Start () {
@@ -23,8 +25,15 @@ public class DialogTrigger : MonoBehaviour {
         //Debug.Log("Colision");
         if (collision.gameObject.name == "Player")
         {
-            dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, true);
-            Destroy(this.gameObject);
+            if (isInstruction)
+            {
+                StartCoroutine(instruction.Fire());
+            }
+            else
+            {
+                dialogManager.GetComponent<Dialog>().StartDialog(ini, fin, true, true);
+                Destroy(this.gameObject);
+            }
         }
     }
 }

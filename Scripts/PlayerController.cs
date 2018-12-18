@@ -57,5 +57,9 @@ public class PlayerController : MonoBehaviour {
             characterScript.EquipSpirit(3);
         }
 
+        if (Input.GetButtonDown("Inventory"))
+        {
+            characterScript.OpenInventory();
+        }
     }
 }

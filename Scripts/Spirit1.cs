@@ -43,6 +43,10 @@ public class Spirit1 : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.name);
+        if (collision.isTrigger)
+            return;
+
         if (collision.name == "GrabberU" || collision.name == "GrabberD" || collision.name == "GrabberL" || collision.name == "GrabberR" || collision.name == "Player")
             return;
         if(collision.name.Length >= 7 && collision.name.Substring(0, 7) == "Trigger")

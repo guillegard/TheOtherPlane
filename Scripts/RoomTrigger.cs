@@ -10,6 +10,7 @@ public class RoomTrigger : MonoBehaviour {
     }
 
     public Type type;
+    public GameObject colliderTrigger;
     public int deathEnemiesT;
     public int[] door;
     public GameObject roomController;
