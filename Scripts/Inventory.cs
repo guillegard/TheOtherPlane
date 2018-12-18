@@ -16,6 +16,10 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Potion Added");
                 Debug.Log(Potion.quantity);
                 break;
+
+            case Item.Type.SpiritPotion:
+                Potion.spiritQuantity++;
+                break;
         }
     }
 }

@@ -6,7 +6,7 @@ public class Item : MonoBehaviour {
 
     public enum Type
     {
-        Key, Door, Chest, Special, Potion
+        Key, Door, Chest, Special, Potion, SpiritPotion
     }
 
     public Type type;
