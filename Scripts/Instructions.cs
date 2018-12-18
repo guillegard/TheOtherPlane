@@ -25,23 +25,26 @@ public class Instructions : MonoBehaviour {
     {
         fire.SetActive(true);
         instructionImage.SetActive(true);
+        ParticleSystem.EmissionModule emissionModule1 = p1.emission;
+        ParticleSystem.EmissionModule emissionModule2 = p2.emission;
+        ParticleSystem.EmissionModule emissionModule3 = p3.emission;
         for (float i = 0; i <= 1; i += Time.deltaTime)
         {
             // set color with i as alpha
-            ParticleSystem.EmissionModule emissionModule1 = p1.emission;
-            ParticleSystem.EmissionModule emissionModule2 = p2.emission;
-            ParticleSystem.EmissionModule emissionModule3 = p3.emission;
+            
             //Debug.Log(i);
-            emissionModule1.rateOverTime = 50 * (1 - i);
-            emissionModule2.rateOverTime = 50 * (1 - i);
-            emissionModule3.rateOverTime = 50 * (1 - i);
+            emissionModule1.rateOverTime = 100 * (1 - i);
+            emissionModule2.rateOverTime = 100 * (1 - i);
+            emissionModule3.rateOverTime = 100 * (1 - i);
             instructionImage.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, i);
             yield return new WaitForSeconds(0.07f);
         }
 
         yield return new WaitForSeconds(0.5f);
 
-        Destroy(fire);
+        emissionModule1.rateOverTime = 0;
+        emissionModule2.rateOverTime = 0;
+        emissionModule3.rateOverTime = 0;
         this.gameObject.SetActive(false);
     }
 
