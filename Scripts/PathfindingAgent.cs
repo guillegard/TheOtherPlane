@@ -8,7 +8,13 @@ public class PathfindingAgent : MonoBehaviour {
 	public float moveSpeed = 5;
 	Vector3[] path;
 	int targetIndex;
-	
+	Enemy pawn;
+
+	private void Start()
+	{
+		pawn = GetComponent<Enemy>();
+	}
+
 	public void MoveTowards(Vector3 target)
 	{
 		this.target = target;
@@ -19,6 +25,7 @@ public class PathfindingAgent : MonoBehaviour {
 	{
 		targetIndex = 0;
 		StopCoroutine("FollowPath");
+		pawn.anim.SetBool("isMoving", false);
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccess)
@@ -35,6 +42,9 @@ public class PathfindingAgent : MonoBehaviour {
 	IEnumerator FollowPath()
 	{
 		Vector3 currentWaypoint = path[0];
+		pawn.anim.SetBool("isMoving", true);
+		pawn.LookAt(currentWaypoint);
+		
 		
 		while(true)
 		{
@@ -45,9 +55,11 @@ public class PathfindingAgent : MonoBehaviour {
 				if (targetIndex >= path.Length)
 				{
 					targetIndex = 0;
+					pawn.anim.SetBool("isMoving", false);
 					yield break;
 				}
 				currentWaypoint = path[targetIndex];
+				pawn.LookAt(currentWaypoint);
 			}
 
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, moveSpeed * Time.deltaTime);

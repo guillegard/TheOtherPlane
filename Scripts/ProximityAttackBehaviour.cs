@@ -74,9 +74,11 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 			{
 				currentAttackCD = pawn.cooldown;
 
+				pawn.LookAt(target.transform.position);
 				pawn.MeleeAttack();
 				pawnAgent.Stop();
 				pursuing = false;
+
 			}
 
 			//Adjust path only if we can attack

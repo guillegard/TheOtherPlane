@@ -61,6 +61,9 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 			if (currentAttackCD <= 0)
 				Fire();
 
+			if (fireOnlyIfInRange)
+				pawn.LookAt(PlayerManager.instance.player.transform.position);
+
 			if (!attackingPlayer && fireOnlyIfInRange)
 			{
 				attackingPlayer = true;

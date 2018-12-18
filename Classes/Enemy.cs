@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public float specialDamage;
     public Projectile projectilePrefab;
 	public LayerMask damagingLayer;
+	public Vector2 defaultLookingDir;
 
 
     [Header("Control variables")]
@@ -42,8 +43,8 @@ public class Enemy : MonoBehaviour, IDamageable
     public GameObject grabberR;
     public GameObject grabberL;
 
-    //private variables
-    private Animator anim;
+	[HideInInspector]
+    public Animator anim { get; private set; }
 
 	ContactFilter2D meleeAttackFilter = new ContactFilter2D();
 
@@ -53,8 +54,6 @@ public class Enemy : MonoBehaviour, IDamageable
 		hp = maxHp;
 		spirit = maxSpirit;
 
-		direction = new Vector2(1, 0);
-
 		meleeAttackFilter.useTriggers = true;
 		meleeAttackFilter.useLayerMask = true;
 		meleeAttackFilter.layerMask = damagingLayer;
@@ -63,6 +62,11 @@ public class Enemy : MonoBehaviour, IDamageable
 	void Start()
 	{
 		anim = GetComponentInChildren<Animator>();
+		LookAt(transform.position + (Vector3)defaultLookingDir);
+	}
+
+	private void Update()
+	{
 	}
 
 	public void MeleeAttack()
@@ -109,6 +113,39 @@ public class Enemy : MonoBehaviour, IDamageable
 	public void Special()
 	{
 
+	}
+
+	public void LookAt(Vector3 target)
+	{
+		Vector2 lookDir = target - transform.position;
+		float angle = (float)Mathf.Atan2(lookDir.y, lookDir.x);//- Mathf.PI / 2;
+		angle = angle < 0 ? angle + Mathf.PI * 2 : angle;
+		int dir = Mathf.RoundToInt(angle / (Mathf.PI / 2));
+
+		switch (dir)
+		{
+			case 0:
+			case 4:
+				anim.SetTrigger("faceRight");
+				direction = Vector2.right;
+				break;
+			case 1:
+				anim.SetTrigger("faceUp");
+				direction = Vector2.up;
+				break;
+			case 2:
+				anim.SetTrigger("faceLeft");
+				direction = Vector2.left;
+				break;
+			case 3:
+				anim.SetTrigger("faceDown");
+				direction = Vector2.down;
+				break;
+			default:
+				print("Unexpected direction");
+				Debug.Break();
+				break;
+		}
 	}
 
 	public void TakeDamage(float damage, Status s)
