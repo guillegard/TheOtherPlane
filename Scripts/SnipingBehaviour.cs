@@ -79,9 +79,8 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 
 	private void Fire()
 	{
-		Vector3 target = fireOnlyIfInRange ? PlayerManager.instance.player.transform.position : (Vector3)pawn.direction;
 		currentAttackCD = attackCooldown;
-		pawn.RangedAttack(target);
+		pawn.RangedAttack(PlayerManager.instance.player.transform.position, !fireOnlyIfInRange);
 	}
 
 	void OnDrawGizmosSelected()

@@ -75,8 +75,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 				currentAttackCD = pawn.cooldown;
 
 				pawn.MeleeAttack();
-				print("Enemy attacking");
-
+				pawnAgent.Stop();
 				pursuing = false;
 			}
 
@@ -86,14 +85,12 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 				pursuing = true;
 				Vector3 target = GetNearestAdyacent();
 				pawnAgent.MoveTowards(target);
-				print("Enemy pursuing to" + target);
 				currentReadjustCD = pathReadjustCooldown;
 			}
 		}
 		else if (playerDetected)
 		{
 			playerDetected = false;
-			print("Player out of range");
 			pursuing = false;
 			pawnAgent.Stop();
 

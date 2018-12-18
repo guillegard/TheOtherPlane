@@ -24,8 +24,6 @@ public class Pathfinding : MonoBehaviour {
 		Node startNode = grid.GetNodeFromWorldPoint(beginPos);
 		Node endNode = grid.GetNodeFromWorldPoint(targetPos);
 
-		print("Pathing " + "( " + startNode.gridX + ", " + startNode.gridY + ") -> (" + endNode.gridX + ", " + endNode.gridY + ") -> (");
-
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 
