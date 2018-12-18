@@ -7,6 +7,7 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 	
 	public float detectionRadius = 7f;
 	public bool fireOnlyIfInRange = true;
+	public bool engageOnlyIfVisible = true;
 	public LayerMask detectionLayer;
 
 	public event Action OnPlayerDetected;
@@ -47,6 +48,16 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
 
 		if (detectionTrigger.IsTouchingLayers(detectionLayer) || !fireOnlyIfInRange)
 		{
+			/*if (engageOnlyIfVisible)
+			{
+				Vector3 detectedTarget = PlayerManager.instance.player.transform.position;
+				RaycastHit2D hit = Physics2D.Raycast(transform.position, (detectedTarget - transform.position).normalized, detectionRadius);
+
+				//First object hit is not detectable => object is not visible
+				if ((( 1 << (hit.collider.gameObject.layer + 1)) & detectionLayer.value) != 0)
+					return;
+			}*/
+
 			if (currentAttackCD <= 0)
 				Fire();
 

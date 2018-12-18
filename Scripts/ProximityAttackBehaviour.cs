@@ -11,6 +11,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 	public float detectionRadius = 7f;
 	public float attackRadius = 2f;
 	public float pathReadjustCooldown = 1f; //in seconds
+	public bool engageOnlyIfVisible = true;
 
 	public event Action OnPlayerDetected;
 	public event Action OnPlayerUnDetected;
@@ -24,6 +25,7 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 	float currentAttackCD = 0;
 	float currentReadjustCD = 0;
 	bool pursuing = false;      //Whether this enemy is trying to reach the player or not
+	bool playerDetected = false;
 	
 
 	void Start()
@@ -51,6 +53,22 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 		float dist = (target.transform.position - transform.position).magnitude;
 		if (dist <= detectionRadius )
 		{
+			/*if (engageOnlyIfVisible)
+			{
+				RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position, detectionRadius);
+
+				//First object hit is not our target
+				if (hit.collider.gameObject != target.gameObject)
+					return;
+			}*/
+
+			if (!playerDetected)
+			{
+				playerDetected = true;
+				if (OnPlayerDetected != null)
+					OnPlayerDetected();
+			}
+
 			//Player within attack radius
 			if ((dist <= attackRadius ) && currentAttackCD <= 0)
 			{
@@ -72,11 +90,15 @@ public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
 				currentReadjustCD = pathReadjustCooldown;
 			}
 		}
-		else if (pursuing)
+		else if (playerDetected)
 		{
+			playerDetected = false;
 			print("Player out of range");
 			pursuing = false;
 			pawnAgent.Stop();
+
+			if (OnPlayerUnDetected != null)
+				OnPlayerUnDetected();
 		}
 
 		//Attack cooldown
