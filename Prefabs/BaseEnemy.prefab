@@ -533,6 +533,10 @@ MonoBehaviour:
   specialDamage: 0
   projectilePrefab: {fileID: 114210095121751568, guid: dab62fd5c44714244bba8021c0ad8031,
     type: 2}
+  damagingLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  defaultLookingDir: {x: 1, y: 0}
   hp: 0
   spirit: 0
   equippedWeapon: {fileID: 0}
