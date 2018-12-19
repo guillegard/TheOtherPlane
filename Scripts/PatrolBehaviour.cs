@@ -7,12 +7,15 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 
 	public Vector3[] patrolPoints;
 	public bool shouldLoopAround;
+	public LayerMask damageOnTouchLayer;
 	public float proximityTolerance = 0.01f;
 
 	int currentTargetIndex = 0;
 	bool goingForward = true;
-	PathfindingAgent agent;
 	bool beganPlay = false;
+
+	PathfindingAgent agent;
+	Enemy pawn;
 
 	private void Start()
 	{
@@ -22,6 +25,7 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 
 		beganPlay = true;
 
+		pawn = GetComponent<Enemy>();
 		agent = GetComponent<PathfindingAgent>();
 		agent.MoveTowards(patrolPoints[currentTargetIndex]);
 	}
@@ -55,8 +59,18 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 						currentTargetIndex--;
 				}
 			}
-			print("New patrol target index: " + currentTargetIndex);
 			agent.MoveTowards(patrolPoints[currentTargetIndex]);
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (((1 << collision.gameObject.layer) & damageOnTouchLayer.value) != 0)
+		{
+			IDamageable damageableEntity = collision.gameObject.GetComponent<IDamageable>();
+
+			if (damageableEntity != null)
+				damageableEntity.TakeDamage(pawn.damage, null);
 		}
 	}
 
