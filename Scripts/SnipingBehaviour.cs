@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SnipingBehaviour : MonoBehaviour, IEnemyBehaviour {
+public class SnipingBehaviour : MonoBehaviour, IEnemyAgressiveBehaviour {
 	
 	public float detectionRadius = 7f;
 	public bool fireOnlyIfInRange = true;

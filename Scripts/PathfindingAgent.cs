@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PathfindingAgent : MonoBehaviour {
 
+	[HideInInspector]
+	public bool isMoving { get; private set; }
+
 	Vector3 target;
 	public float moveSpeed = 5;
 	Vector3[] path;
@@ -24,6 +27,7 @@ public class PathfindingAgent : MonoBehaviour {
 	public void Stop()
 	{
 		targetIndex = 0;
+		isMoving = false;
 		StopCoroutine("FollowPath");
 		pawn.anim.SetBool("isMoving", false);
 	}
@@ -32,6 +36,7 @@ public class PathfindingAgent : MonoBehaviour {
 	{
 		if (pathSuccess)
 		{
+			isMoving = true;
 			targetIndex = 0;
 			path = newPath;
 			StopCoroutine("FollowPath");
@@ -44,7 +49,6 @@ public class PathfindingAgent : MonoBehaviour {
 		Vector3 currentWaypoint = path[0];
 		pawn.anim.SetBool("isMoving", true);
 		pawn.LookAt(currentWaypoint);
-		
 		
 		while(true)
 		{

@@ -14,7 +14,8 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 	bool goingForward = true;
 	bool beganPlay = false;
 
-	PathfindingAgent agent;
+	[HideInInspector]
+	public PathfindingAgent agent { get; private set; }
 	Enemy pawn;
 
 	private void Start()
@@ -60,6 +61,11 @@ public class PatrolBehaviour : MonoBehaviour, IEnemyBehaviour {
 				}
 			}
 			agent.MoveTowards(patrolPoints[currentTargetIndex]);
+		}
+		else if (!agent.isMoving)
+		{
+			agent.MoveTowards(patrolPoints[currentTargetIndex]);
+
 		}
 	}
 

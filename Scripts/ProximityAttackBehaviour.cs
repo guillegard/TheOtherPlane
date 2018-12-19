@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ProximityAttackBehaviour : MonoBehaviour, IEnemyBehaviour
+public class ProximityAttackBehaviour : MonoBehaviour, IEnemyAgressiveBehaviour
 {
 	[HideInInspector]
 	public Character target;
