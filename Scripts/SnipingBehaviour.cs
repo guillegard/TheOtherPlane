@@ -25,6 +25,14 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyAgressiveBehaviour {
 		detectionTrigger = gameObject.AddComponent<CircleCollider2D>();
 		detectionTrigger.isTrigger = true;
 		detectionTrigger.radius = detectionRadius;
+
+		// Adjust radius to match
+		var matrix = detectionTrigger.transform.localToWorldMatrix;
+		var xAxisMag = matrix.GetColumn(0).magnitude;
+		var yAxisMag = matrix.GetColumn(1).magnitude;
+		var zAxisMag = matrix.GetColumn(2).magnitude;
+
+		detectionTrigger.radius = detectionRadius / Mathf.Max(xAxisMag, yAxisMag, zAxisMag);
 	}
 
 	void Start()
@@ -32,13 +40,7 @@ public class SnipingBehaviour : MonoBehaviour, IEnemyAgressiveBehaviour {
 		pawn = GetComponent<Enemy>();
 		attackCooldown = pawn.rangedCooldown;
 
-		// Adjust radius to match
-		var matrix = detectionTrigger.transform.localToWorldMatrix;
-		var xAxisMag = matrix.GetColumn(0).magnitude;
-		var yAxisMag = matrix.GetColumn(1).magnitude;
-		var zAxisMag = matrix.GetColumn(2).magnitude;
 		
-		detectionTrigger.radius = detectionRadius / Mathf.Max(xAxisMag, yAxisMag, zAxisMag);
 	}
 
 	private void Update()

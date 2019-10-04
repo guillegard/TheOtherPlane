@@ -499,4 +499,12 @@ public class Character : MonoBehaviour, IDamageable {
 	{
 		return new Transform[] { grabberD.transform, grabberL.transform, grabberR.transform, grabberU.transform};
 	}
+
+	public Vector2 GetLookingDir()
+	{
+		int xDir = left ? -1 : (right ? 1 : 0);
+		int yDir = down ? -1 : (up ? 1 : 0);
+
+		return new Vector2(xDir, yDir).normalized;
+	}
 }
